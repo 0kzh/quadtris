@@ -1,0 +1,20 @@
+This note was posted to Piazza by adapting an email from Nick Lee (S18). I suggest including it in the other documentation somewhere.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+A few clarifying details about running GUI programs by ssh-ing into the student environment:
+ 
+You can run any GUI program that is installed on the student environment (such as glade) through ssh. However, 
+it may be slow from off-campus or with weak wifi. The exact steps depend on what OS and ssh client you are using.
+
+For Mac, install XQuartz first. Then when you run the ssh command, use the -X or -Y argument to enable X11 
+forwarding so that GUI programs will display in a window.
+
+For Windows, install Xming. How you enable X11 forwarding depends a lot on what SSH client you are using. For 
+example, in PuTTY on the left-hand side click on "Connection" then "SSH" and then "X11" where you will find a 
+check-box for "Enable X11 forwarding" (you will want to save this setting so that you do not have to change it 
+every time). Some students have reported issues with trying to enable X11 forwarding on the built in Windows 
+terminal, so a SSH client like PuTTY is recommended.
+
+Now, when you want to run a GUI program in ssh, first make sure XQuartz or Xming is running. Then, if you want 
+to run glade, for example, once you ssh into the Linux server with X11 forwarding enabled, you can run the "glade" 
+command to start it.
