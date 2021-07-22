@@ -1,1 +1,0 @@
-Custom dialog example

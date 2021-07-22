@@ -1,1 +1,0 @@
-Demonstrates drag-and-drop

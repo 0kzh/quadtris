@@ -1,1 +1,0 @@
-Colour chooser dialog example

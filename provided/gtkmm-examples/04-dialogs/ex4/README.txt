@@ -1,1 +1,0 @@
-Font chooser dialog example

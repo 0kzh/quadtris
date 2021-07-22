@@ -1,1 +1,0 @@
-Drawing curved lines example
