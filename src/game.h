@@ -12,7 +12,7 @@ using namespace std;
 class Game {
   int score_;
   shared_ptr<Grid> grid_;
-  vector<unique_ptr<View>> views_;
+  vector<shared_ptr<View>> views_;
   // unique_ptr<Random> random_;
   // BlockType[] blockSequence_;
 
@@ -42,6 +42,7 @@ public:
   // }
 private:
   void gameLoop();
+  static void readCommand();
   //  { grid_->draw(); }
 };
 

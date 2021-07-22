@@ -9,7 +9,7 @@ OBJECTS = $(SRC:%.cpp=%.o)
 DEPENDS = ${OBJECTS:.o=.d} # substitute .o with .d for dependency files
 EXEC = prog
 
-${EXEC}: ${OBJECTS}
+all: ${OBJECTS}
 	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC}
 
 clean:

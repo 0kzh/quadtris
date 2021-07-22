@@ -4,6 +4,8 @@
 
 using namespace std;
 
+TextView::TextView() {}
+
 void TextView::draw(shared_ptr<Grid> g) {
   for (int row = 0; row < g->height(); row++) {
     const std::vector<GridItem> &rowVec = g->grid().at(row);

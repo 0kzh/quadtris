@@ -7,4 +7,5 @@ std::ostream &operator<<(std::ostream &os, const GridItem g) {
   } else {
     os << " ";
   }
+  return os;
 }

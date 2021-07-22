@@ -11,7 +11,7 @@ enum Direction { LEFT, RIGHT, DOWN };
 enum RotationDirection { CW, CCW };
 
 struct GridItem {
-  std::optional<BlockType> val;
+  std::optional<BlockType> val = std::nullopt;
 };
 
 std::ostream &operator<<(std::ostream &os, const GridItem g);
