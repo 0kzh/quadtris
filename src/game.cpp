@@ -8,7 +8,7 @@ using namespace std;
 Game::Game(bool textOnly, string seed, string scriptFile, int initialLevel)
     : textOnly_(textOnly), scriptFile_(scriptFile), curLevelIdx_(initialLevel) {
   views_.push_back(make_shared<TextView>(TextView()));
-  grid_ = make_shared<Grid>(Grid(11, 15 + EXTRA_ROWS));
+  grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
 }
 
 void Game::start() {
@@ -19,18 +19,21 @@ void Game::start() {
 
 void Game::gameLoop() {
   for (auto &v : views_) {
-      readCommand();
+    if (!grid_->fallingBlock()) {
+      grid_->setFallingBlock(Block{T, false});
+    }
+    readCommand();
     v->draw(grid_);
   }
 }
 
 void Game::readCommand() {
-    string input;
-    do {
-        getline(cin, input);
-    } while (inputToCommand.find(input) == inputToCommand.end());
+  string input;
+  do {
+    getline(cin, input);
+  } while (inputToCommand.find(input) == inputToCommand.end());
 
-    Command cmd = inputToCommand[input];
+  Command cmd = inputToCommand[input];
 
-    cout << cmd << endl;
+  cout << cmd << endl;
 }

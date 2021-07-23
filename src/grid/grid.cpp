@@ -13,6 +13,7 @@ Grid::Grid(int height, int width) {
   grid_.clear();
   for (int row = 0; row < height_; row++) {
     vector<GridItem> curRow;
+    curRow.reserve(width_);
     for (int col = 0; col < width_; col++) {
       curRow.push_back(GridItem{nullopt});
     }
@@ -21,5 +22,15 @@ Grid::Grid(int height, int width) {
 }
 
 int Grid::height() const { return height_; }
+
 int Grid::width() const { return width_; }
+
 const std::vector<std::vector<GridItem>> &Grid::grid() const { return grid_; }
+
+const std::optional<Block> &Grid::fallingBlock() const {
+  return fallingBlock_;
+}
+
+void Grid::setFallingBlock(const optional<Block> &b) {
+  fallingBlock_ = b;
+}
