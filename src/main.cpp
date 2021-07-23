@@ -1,13 +1,37 @@
 #include "game.h"
+#include <iostream>
 #include <string>
 
 using namespace std;
 
-int main() {
-  bool textOnly = true;
-  string seed = "poop";
-  string scriptFile = "";
+int main(int argc, char *argv[]) {
+  bool textOnly = false;
+  int seed = 0;
+  string scriptFile = "sequence.txt";
   int startLevel = 0;
+  
+  for (int i = 1; i < argc; i++) {
+    char * cur = argv[i];
+    int j = 0;
+    char prev = '\0';
+    while (cur[j] != '\0') {
+      if (prev == 's') {
+        if (cur[j] == 'c') {
+          scriptfile = argv[i+1];
+        } else if (cur[j] == 'e') {
+          seed = atoi(argv[i+1]);
+        } else if (cur[j] == 't') {
+          level = atoi(argv[i+1]);
+        }
+        i++;
+        break;
+      } else if (prev == '-' && cur[j] == 't') {
+        textOnly = true;
+        break;
+      }
+      prev = cur[j];
+    }
+  }
 
   Game game = Game(textOnly, seed, scriptFile, startLevel);
   game.start();
