@@ -11,7 +11,7 @@ class Grid {
   int width_;
   std::optional<Block> fallingBlock_;
 
-  std::vector<std::vector<GridItem>> grid_;
+  GridShape grid_;
 
 public:
   Grid(int height, int width);
@@ -20,9 +20,9 @@ public:
 
   int width() const;
 
-  const std::vector<std::vector<GridItem>> &grid() const;
+  const GridShape &grid() const;
 
-  const std::optional<Block> &fallingBlock() const;
+  std::optional<Block> &fallingBlock();
 
   void setFallingBlock(const std::optional<Block> &);
 };

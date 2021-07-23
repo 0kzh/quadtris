@@ -30,6 +30,8 @@ struct GridItem {
   std::optional<BlockType> val = std::nullopt;
 };
 
+typedef std::vector<std::vector<GridItem>> GridShape;
+
 std::ostream &operator<<(std::ostream &os, const GridItem g);
 
 #endif

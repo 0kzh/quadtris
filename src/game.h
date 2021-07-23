@@ -26,7 +26,9 @@ class Game {
 
 public:
   Game(bool textOnly, string seed, string scriptFile, int initialLevel);
+
   void start();
+
   void update();
   // {
   //   textOnly_ = textOnly;
@@ -42,7 +44,8 @@ public:
   // }
 private:
   void gameLoop();
-  static void readCommand();
+
+  void readCommand();
   //  { grid_->draw(); }
 };
 

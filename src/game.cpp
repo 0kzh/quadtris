@@ -35,5 +35,23 @@ void Game::readCommand() {
 
   Command cmd = inputToCommand[input];
 
-  cout << cmd << endl;
+  switch (cmd) {
+    case CMD_LEFT:
+      if (grid_->fallingBlock()) {
+        grid_->fallingBlock()->move(LEFT, grid_->grid());
+      }
+      break;
+    case CMD_RIGHT:
+      if (grid_->fallingBlock()) {
+        grid_->fallingBlock()->move(RIGHT, grid_->grid());
+      }
+      break;
+    case CMD_DOWN:
+      if (grid_->fallingBlock()) {
+        grid_->fallingBlock()->move(DOWN, grid_->grid());
+      }
+      break;
+    default:
+      cout << cmd << endl;
+  }
 }

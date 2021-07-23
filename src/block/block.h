@@ -7,7 +7,6 @@
 #include <vector>
 #include <map>
 
-using GridShape = std::vector<std::vector<GridItem>>;
 inline GridItem __ = GridItem{std::nullopt};
 inline GridItem I_ = GridItem{I};
 inline GridItem J_ = GridItem{J};
@@ -42,7 +41,7 @@ inline std::map<BlockType, GridShape> blockTypeToData = {
 
 class Block {
   bool isHeavy_;
-  std::vector<std::vector<GridItem>> shape_;
+  GridShape shape_;
   BlockType type_;
 
   int height_;
@@ -52,7 +51,7 @@ class Block {
 public:
   Block(BlockType type, bool isHeavy);
 
-  bool move(Direction d);
+  bool move(Direction d, const GridShape &g);
 
   void drop();
 
