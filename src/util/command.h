@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 enum Command {
   CMD_LEFT,
@@ -49,5 +50,29 @@ inline std::map<std::string, Command> inputToCommand = {
     {"restart",          CMD_RESTART},
     {"hint",             CMD_HINT},
 };
+
+// does fuzzy matching on string input.
+// returns `Command` if found, `nullopt` otherwise
+inline std::optional<Command> matchCommand(const std::string &input) {
+  std::vector<std::string> keys;
+  keys.reserve(inputToCommand.size());
+
+  for (auto &it : inputToCommand) {
+    keys.push_back(it.first);
+  }
+
+  std::optional<Command> foundCommand = std::nullopt;
+  for (auto &key : keys) {
+    // rfind checks for prefix substring
+    if (key.rfind(input, 0) == 0) {
+      if (foundCommand) {
+        return std::nullopt; // more than 1 matching command
+      }
+      foundCommand = inputToCommand[key];
+    }
+  }
+
+  return foundCommand;
+}
 
 #endif

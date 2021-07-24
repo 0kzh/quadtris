@@ -31,9 +31,9 @@ void Game::readCommand() {
   string input;
   do {
     getline(cin, input);
-  } while (inputToCommand.find(input) == inputToCommand.end());
+  } while (!matchCommand(input));
 
-  Command cmd = inputToCommand[input];
+  Command cmd = *matchCommand(input);
 
   switch (cmd) {
     case CMD_LEFT:
