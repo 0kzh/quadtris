@@ -12,30 +12,23 @@ Block::Block(BlockType type, bool isHeavy) : isHeavy_(isHeavy), type_(type) {
   bottomLeft_ = Point{.x = 0, .y = 2 + height_};
 }
 
-bool Block::move(Direction d, const GridShape &g) {
-  int gridHeight = g.size();
-  int gridWidth = g[0].size();
-
-  auto inside = [&](int x, int y) {
-    return (x >= 0 && x < gridWidth && y >= 0 && y < gridHeight);
-  };
-
+bool Block::move(Direction d, GridShape &g) {
   switch (d) {
     case LEFT:
-      if (inside(bottomLeft_.x - 1, bottomLeft_.y)) {
+      if (!intersects(Point{.x =  bottomLeft_.x - 1, .y = bottomLeft_.y}, g)) {
         bottomLeft_.x--;
-        return true;
       }
       break;
     case RIGHT:
-      if (inside(bottomLeft_.x + width_, bottomLeft_.y)) {
+      if (!intersects(Point{.x = bottomLeft_.x + width_, .y = bottomLeft_.y}, g)) {
         bottomLeft_.x++;
-        return true;
       }
       break;
     case DOWN:
-      if (inside(bottomLeft_.x, bottomLeft_.y + 1)) {
+      if (!intersects(Point{.x = bottomLeft_.x, .y = bottomLeft_.y + 1}, g)) {
         bottomLeft_.y++;
+      } else {
+        copyToGrid(g);
         return true;
       }
       break;

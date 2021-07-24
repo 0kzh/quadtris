@@ -51,7 +51,8 @@ class Block {
 public:
   Block(BlockType type, bool isHeavy);
 
-  bool move(Direction d, const GridShape &g);
+  // moves the block and returns a bool indicating if we should remove the block;
+  bool move(Direction d, GridShape &g);
 
   void drop(GridShape &g);
 

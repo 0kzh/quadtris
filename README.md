@@ -7,7 +7,7 @@
     - [x] multipliers
 - [ ] random number generator
 - [ ] block factory and levels
-- [ ] block movement logic
+- [x] block movement logic
     - [x] directional movement
     - [x] rotation
     - [x] dropping

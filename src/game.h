@@ -45,7 +45,7 @@ public:
 private:
   void gameLoop();
 
-  void readCommand();
+  void processCommand();
   //  { grid_->draw(); }
 };
 

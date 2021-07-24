@@ -18,17 +18,24 @@ void Game::start() {
   }
 }
 
-void Game::gameLoop() {
-  for (auto &v : views_) {
-    if (!grid_->fallingBlock()) {
-      grid_->setFallingBlock(Block{T, false});
-    }
-    readCommand();
-    v->draw(grid_);
+void addBlockIfNone(shared_ptr<Grid> g) {
+  if (!g->fallingBlock()) {
+    g->setFallingBlock(Block{T, false});
   }
 }
 
-void Game::readCommand() {
+void Game::gameLoop() {
+  for (auto &v : views_) {
+    addBlockIfNone(grid_);
+
+    v->draw(grid_);
+    processCommand();
+
+    addBlockIfNone(grid_);
+  }
+}
+
+void Game::processCommand() {
   int multiplier;
   string input;
 
@@ -55,7 +62,10 @@ void Game::readCommand() {
         break;
       case CMD_DOWN:
         if (grid_->fallingBlock()) {
-          grid_->fallingBlock()->move(DOWN, grid_->grid());
+          bool shouldRemove = grid_->fallingBlock()->move(DOWN, grid_->grid());
+          if (shouldRemove) {
+            grid_->fallingBlock() = nullopt;
+          }
         }
         break;
       case CMD_CLOCKWISE:
