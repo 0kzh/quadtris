@@ -25,7 +25,7 @@ int Grid::height() const { return height_; }
 
 int Grid::width() const { return width_; }
 
-const GridShape &Grid::grid() const { return grid_; }
+GridShape &Grid::grid() { return grid_; }
 
 std::optional<Block> &Grid::fallingBlock() {
   return fallingBlock_;

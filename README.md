@@ -10,7 +10,7 @@
 - [ ] block movement logic
     - [x] directional movement
     - [x] rotation
-    - [ ] dropping
+    - [x] dropping
 - [x] drawing of grid and blocks
 - [ ] clearing of lines
 - [ ] scoring logic

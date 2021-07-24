@@ -20,7 +20,7 @@ public:
 
   int width() const;
 
-  const GridShape &grid() const;
+  GridShape &grid();
 
   std::optional<Block> &fallingBlock();
 

@@ -53,7 +53,12 @@ public:
 
   bool move(Direction d, const GridShape &g);
 
-  void drop();
+  void drop(GridShape &g);
+
+  // checks if the block intersects with any of the grid blocks or the edges
+  bool intersects(const Point &p, const GridShape &g);
+
+  void copyToGrid(GridShape &g);
 
   bool rotate(RotationDirection d, const GridShape &g);
 

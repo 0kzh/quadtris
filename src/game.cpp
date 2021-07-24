@@ -68,6 +68,12 @@ void Game::readCommand() {
           grid_->fallingBlock()->rotate(CCW, grid_->grid());
         }
         break;
+      case CMD_DROP:
+        if (grid_->fallingBlock()) {
+          grid_->fallingBlock()->drop(grid_->grid());
+          grid_->fallingBlock() = nullopt;
+        }
+        break;
       default:
         break;
     }

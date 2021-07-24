@@ -16,5 +16,5 @@ pair<int, string> splitMultipliedInput(const string &input) {
     }
   }
 
-  return make_pair(stoi(digStr), command);
+  return make_pair(digStr == "" ? 1 : stoi(digStr), command);
 }

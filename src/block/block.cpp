@@ -43,8 +43,64 @@ bool Block::move(Direction d, const GridShape &g) {
   return false;
 }
 
-void Block::drop() {
+void Block::drop(GridShape &g) {
+  Point newBottomLeft = bottomLeft_;
 
+  // go down until it collides
+  do {
+    newBottomLeft.y += 1;
+  } while (!intersects(newBottomLeft, g));
+
+  // move back to last valid position
+  newBottomLeft.y -= 1;
+
+  bottomLeft_ = newBottomLeft;
+
+  copyToGrid(g);
+}
+
+bool Block::intersects(const Point &p, const GridShape &g) {
+  int x = p.x;
+  int y = p.y;
+  int gridHeight = g.size();
+  int gridWidth = g[0].size();
+
+  bool inBounds = (x >= 0 && x < gridWidth && y >= 0 && y < gridHeight);
+  if (!inBounds) {
+    return true;
+  }
+
+  for (int r = 0; r < height_; r++) {
+    for (int c = 0; c < width_; c++) {
+      int gridRow = y - (height_ - 1) + r;
+      int gridCol = x + c;
+
+      if (shape_[r][c].val) {
+        GridItem itemAtPos = g[gridRow][gridCol];
+        if (itemAtPos.val) {
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
+}
+
+void Block::copyToGrid(GridShape &g) {
+  int y = bottomLeft_.y;
+  int x = bottomLeft_.x;
+
+  for (int r = 0; r < height_; r++) {
+    for (int c = 0; c < width_; c++) {
+      int gridRow = y - (height_ - 1) + r;
+      int gridCol = x + c;
+
+      if (shape_[r][c].val) {
+        g[gridRow][gridCol] = GridItem{*shape_[r][c].val};
+      }
+    }
+  }
 }
 
 bool Block::rotate(RotationDirection d, const GridShape &g) {
