@@ -25,7 +25,7 @@ class Game {
   const int EXTRA_ROWS = 3;
 
 public:
-  Game(bool textOnly, string seed, string scriptFile, int initialLevel);
+  Game(bool textOnly, int seed, string scriptFile, int initialLevel);
 
   void start();
 

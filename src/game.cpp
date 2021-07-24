@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Game::Game(bool textOnly, string seed, string scriptFile, int initialLevel)
+Game::Game(bool textOnly, int seed, string scriptFile, int initialLevel)
     : textOnly_(textOnly), scriptFile_(scriptFile), curLevelIdx_(initialLevel) {
   views_.push_back(make_shared<TextView>(TextView()));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
@@ -49,6 +49,16 @@ void Game::readCommand() {
     case CMD_DOWN:
       if (grid_->fallingBlock()) {
         grid_->fallingBlock()->move(DOWN, grid_->grid());
+      }
+      break;
+    case CMD_CLOCKWISE:
+      if (grid_->fallingBlock()) {
+        grid_->fallingBlock()->rotate(CW, grid_->grid());
+      }
+      break;
+    case CMD_COUNTERCLOCKWISE:
+      if (grid_->fallingBlock()) {
+        grid_->fallingBlock()->rotate(CCW, grid_->grid());
       }
       break;
     default:

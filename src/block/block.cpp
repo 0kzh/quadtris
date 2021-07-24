@@ -9,7 +9,7 @@ Block::Block(BlockType type, bool isHeavy) : isHeavy_(isHeavy), type_(type) {
   height_ = shape_.size();
   width_ = shape_[0].size();
 
-  bottomLeft_ = Point{.x = 0, .y = 3};
+  bottomLeft_ = Point{.x = 0, .y = 2 + height_};
 }
 
 bool Block::move(Direction d, const GridShape &g) {
@@ -34,13 +34,12 @@ bool Block::move(Direction d, const GridShape &g) {
       }
       break;
     case DOWN:
-      if (inside(bottomLeft_.x, bottomLeft_.y + height_)) {
+      cout << bottomLeft_.y << ", " << gridHeight;
+      if (inside(bottomLeft_.x, bottomLeft_.y + 1)) {
         bottomLeft_.y++;
         return true;
       }
       break;
-    default:
-      return false;
   }
   return false;
 }
@@ -49,7 +48,40 @@ void Block::drop() {
 
 }
 
-bool Block::rotate(RotationDirection d) {
+bool Block::rotate(RotationDirection d, const GridShape &g) {
+  int gridHeight = g.size();
+  int gridWidth = g[0].size();
+
+  switch (d) {
+    case CW: {
+      GridShape rotated(width_, std::vector<GridItem>(height_, GridItem{nullopt}));
+
+      for (int r = 0; r < height_; r++) {
+        for (int c = 0; c < width_; c++) {
+          rotated[c][height_ - 1 - r] = shape_[r][c];
+        }
+      }
+
+      shape_ = rotated;
+
+      swap(height_, width_);
+      break;
+    }
+    case CCW: {
+      GridShape rotated(width_, std::vector<GridItem>(height_, GridItem{nullopt}));
+
+      for (int r = 0; r < height_; r++) {
+        for (int c = 0; c < width_; c++) {
+          rotated[width_ - 1 - c][r] = shape_[r][c];
+        }
+      }
+
+      shape_ = rotated;
+
+      swap(height_, width_);
+      break;
+    }
+  }
   return false;
 }
 

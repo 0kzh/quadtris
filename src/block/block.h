@@ -55,7 +55,7 @@ public:
 
   void drop();
 
-  bool rotate(RotationDirection d);
+  bool rotate(RotationDirection d, const GridShape &g);
 
   int height() const;
 

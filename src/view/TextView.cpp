@@ -9,7 +9,7 @@ TextView::TextView() {}
 
 void TextView::draw(shared_ptr<Grid> g) {
   // deep copy grid
-  vector<vector<GridItem>> gridToPrint = g->grid();
+  GridShape gridToPrint = g->grid();
 
   // add the falling block
   const auto &fallingBlock = g->fallingBlock();
@@ -17,7 +17,7 @@ void TextView::draw(shared_ptr<Grid> g) {
     Block b = *fallingBlock;
     for (int r = 0; r < b.height(); r++) {
       for (int c = 0; c < b.width(); c++) {
-        int gridRow = b.bottomLeft().y + r;
+        int gridRow = b.bottomLeft().y - (b.height() - 1) + r;
         int gridCol = b.bottomLeft().x + c;
 
         if (b.shape()[r][c].val) {

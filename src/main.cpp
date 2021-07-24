@@ -9,19 +9,19 @@ int main(int argc, char *argv[]) {
   int seed = 0;
   string scriptFile = "sequence.txt";
   int startLevel = 0;
-  
+
   for (int i = 1; i < argc; i++) {
-    char * cur = argv[i];
+    char *cur = argv[i];
     int j = 0;
     char prev = '\0';
     while (cur[j] != '\0') {
       if (prev == 's') {
         if (cur[j] == 'c') {
-          scriptfile = argv[i+1];
+          scriptFile = argv[i + 1];
         } else if (cur[j] == 'e') {
-          seed = atoi(argv[i+1]);
+          seed = atoi(argv[i + 1]);
         } else if (cur[j] == 't') {
-          level = atoi(argv[i+1]);
+          startLevel = atoi(argv[i + 1]);
         }
         i++;
         break;
