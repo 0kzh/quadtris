@@ -19,11 +19,12 @@ bool Block::move(Direction d, GridShape &g) {
         bottomLeft_.x--;
       }
       break;
-    case RIGHT:
-      if (!intersects(Point{.x = bottomLeft_.x + width_, .y = bottomLeft_.y}, g)) {
+    case RIGHT: {
+      if (!intersects(Point{.x = bottomLeft_.x + 1, .y = bottomLeft_.y}, g)) {
         bottomLeft_.x++;
       }
       break;
+    }
     case DOWN:
       if (!intersects(Point{.x = bottomLeft_.x, .y = bottomLeft_.y + 1}, g)) {
         bottomLeft_.y++;
@@ -53,22 +54,29 @@ void Block::drop(GridShape &g) {
 }
 
 bool Block::intersects(const Point &p, const GridShape &g) {
+  return intersects(p, g, shape_);
+}
+
+bool Block::intersects(const Point &p, const GridShape &g, const GridShape &blockShape) {
   int x = p.x;
   int y = p.y;
   int gridHeight = g.size();
   int gridWidth = g[0].size();
 
-  bool inBounds = (x >= 0 && x < gridWidth && y >= 0 && y < gridHeight);
-  if (!inBounds) {
-    return true;
-  }
+  int shapeHeight = blockShape.size();
+  int shapeWidth = blockShape[0].size();
 
-  for (int r = 0; r < height_; r++) {
-    for (int c = 0; c < width_; c++) {
-      int gridRow = y - (height_ - 1) + r;
+  for (int r = 0; r < shapeHeight; r++) {
+    for (int c = 0; c < shapeWidth; c++) {
+      int gridRow = y - (shapeHeight - 1) + r;
       int gridCol = x + c;
 
-      if (shape_[r][c].val) {
+      bool inBounds = (gridCol >= 0 && gridCol < gridWidth && gridRow >= 0 && gridRow < gridHeight);
+      if (!inBounds) {
+        return true;
+      }
+
+      if (blockShape[r][c].val) {
         GridItem itemAtPos = g[gridRow][gridCol];
         if (itemAtPos.val) {
           return true;
@@ -110,6 +118,11 @@ bool Block::rotate(RotationDirection d, const GridShape &g) {
         }
       }
 
+      // if rotation is oob, don't do anything
+      if (intersects(bottomLeft_, g, rotated)) {
+        return false;
+      }
+
       shape_ = rotated;
 
       swap(height_, width_);
@@ -122,6 +135,11 @@ bool Block::rotate(RotationDirection d, const GridShape &g) {
         for (int c = 0; c < width_; c++) {
           rotated[width_ - 1 - c][r] = shape_[r][c];
         }
+      }
+
+      // if rotation is oob, don't do anything
+      if (intersects(bottomLeft_, g, rotated)) {
+        return false;
       }
 
       shape_ = rotated;

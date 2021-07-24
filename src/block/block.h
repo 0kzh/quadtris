@@ -59,6 +59,8 @@ public:
   // checks if the block intersects with any of the grid blocks or the edges
   bool intersects(const Point &p, const GridShape &g);
 
+  bool intersects(const Point &p, const GridShape &g, const GridShape &blockShape);
+
   void copyToGrid(GridShape &g);
 
   bool rotate(RotationDirection d, const GridShape &g);
