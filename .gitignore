@@ -3,3 +3,4 @@
 **/*.tmp
 prog
 .idea
+**/.DS_Store
