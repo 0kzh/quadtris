@@ -34,7 +34,6 @@ bool Block::move(Direction d, const GridShape &g) {
       }
       break;
     case DOWN:
-      cout << bottomLeft_.y << ", " << gridHeight;
       if (inside(bottomLeft_.x, bottomLeft_.y + 1)) {
         bottomLeft_.y++;
         return true;

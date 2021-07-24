@@ -1,6 +1,7 @@
 #include "game.h"
 #include "view/TextView.h"
 #include "util/command.h"
+#include "util/helper.h"
 #include <iostream>
 
 using namespace std;
@@ -28,40 +29,48 @@ void Game::gameLoop() {
 }
 
 void Game::readCommand() {
+  int multiplier;
   string input;
+
   do {
     getline(cin, input);
+    std::pair<int, string> multipliedInput = splitMultipliedInput(input);
+    multiplier = multipliedInput.first;
+    input = multipliedInput.second;
   } while (!matchCommand(input));
 
   Command cmd = *matchCommand(input);
 
-  switch (cmd) {
-    case CMD_LEFT:
-      if (grid_->fallingBlock()) {
-        grid_->fallingBlock()->move(LEFT, grid_->grid());
-      }
-      break;
-    case CMD_RIGHT:
-      if (grid_->fallingBlock()) {
-        grid_->fallingBlock()->move(RIGHT, grid_->grid());
-      }
-      break;
-    case CMD_DOWN:
-      if (grid_->fallingBlock()) {
-        grid_->fallingBlock()->move(DOWN, grid_->grid());
-      }
-      break;
-    case CMD_CLOCKWISE:
-      if (grid_->fallingBlock()) {
-        grid_->fallingBlock()->rotate(CW, grid_->grid());
-      }
-      break;
-    case CMD_COUNTERCLOCKWISE:
-      if (grid_->fallingBlock()) {
-        grid_->fallingBlock()->rotate(CCW, grid_->grid());
-      }
-      break;
-    default:
-      cout << cmd << endl;
+  for (int i = 0; i < multiplier; i++) {
+    switch (cmd) {
+      case CMD_LEFT:
+        if (grid_->fallingBlock()) {
+          grid_->fallingBlock()->move(LEFT, grid_->grid());
+        }
+        break;
+      case CMD_RIGHT:
+        if (grid_->fallingBlock()) {
+          grid_->fallingBlock()->move(RIGHT, grid_->grid());
+        }
+        break;
+      case CMD_DOWN:
+        if (grid_->fallingBlock()) {
+          grid_->fallingBlock()->move(DOWN, grid_->grid());
+        }
+        break;
+      case CMD_CLOCKWISE:
+        if (grid_->fallingBlock()) {
+          grid_->fallingBlock()->rotate(CW, grid_->grid());
+        }
+        break;
+      case CMD_COUNTERCLOCKWISE:
+        if (grid_->fallingBlock()) {
+          grid_->fallingBlock()->rotate(CCW, grid_->grid());
+        }
+        break;
+      default:
+        break;
+    }
   }
 }
+
