@@ -12,6 +12,6 @@
     - [x] rotation
     - [x] dropping
 - [x] drawing of grid and blocks
-- [ ] clearing of lines
+- [x] clearing of lines
 - [ ] scoring logic
 - [ ] GUI

@@ -25,6 +25,9 @@ public:
   std::optional<Block> &fallingBlock();
 
   void setFallingBlock(const std::optional<Block> &);
+
+  // clears lines at bottom of grid. returns number of lines cleared.
+  int clearLines();
 };
 
 #endif

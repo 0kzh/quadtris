@@ -31,6 +31,9 @@ void Game::gameLoop() {
     v->draw(grid_);
     processCommand();
 
+    int linesCleared = grid_->clearLines();
+    cout << "lines cleared: " << linesCleared << endl;
+
     addBlockIfNone(grid_);
   }
 }
