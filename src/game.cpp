@@ -1,18 +1,14 @@
 #include "game.h"
 #include "view/TextView.h"
 #include "view/GUIView.h"
-#include "util/command.h"
 #include "util/helper.h"
 #include <iostream>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/Xos.h>
 
 using namespace std;
 
 Game::Game(bool textOnly, int seed, string scriptFile, int initialLevel)
     : textOnly_(textOnly), scriptFile_(scriptFile), curLevelIdx_(initialLevel) {
-  views_.push_back(make_shared<TextView>(TextView()));
+//  views_.push_back(make_shared<TextView>(TextView()));
   views_.push_back(make_shared<GUIView>(GUIView(400, 800)));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
 }
@@ -31,10 +27,31 @@ void addBlockIfNone(const shared_ptr<Grid> &g) {
 
 void Game::gameLoop() {
   addBlockIfNone(grid_);
+  shared_ptr<GUIView> guiView;
+  bool hasTextView = false;
+
   for (auto &v : views_) {
     v->draw(grid_);
+    if (dynamic_pointer_cast<GUIView>(v) != nullptr) {
+      guiView = dynamic_pointer_cast<GUIView>(v);
+    }
+    if (dynamic_pointer_cast<TextView>(v) != nullptr) {
+      hasTextView = true;
+    }
   }
-  processCommand();
+
+  Command c;
+  int multiplier;
+  if (hasTextView) {
+    pair<int, Command> res = readCommand();
+    multiplier = res.first;
+    c = res.second;
+  } else {
+    multiplier = 1;
+    c = guiView->getNextEvent();
+  }
+
+  processCommand(multiplier, c);
 
   int linesCleared = grid_->clearLines();
   cout << "lines cleared: " << linesCleared << endl;
@@ -42,7 +59,7 @@ void Game::gameLoop() {
   addBlockIfNone(grid_);
 }
 
-void Game::processCommand() {
+pair<int, Command> Game::readCommand() {
   int multiplier;
   string input;
 
@@ -55,6 +72,10 @@ void Game::processCommand() {
 
   Command cmd = *matchCommand(input);
 
+  return make_pair(multiplier, cmd);
+}
+
+void Game::processCommand(int multiplier, Command cmd) {
   for (int i = 0; i < multiplier; i++) {
     switch (cmd) {
       case CMD_LEFT:

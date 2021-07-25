@@ -37,18 +37,19 @@ void Grid::setFallingBlock(const optional<Block> &b) {
 
 int Grid::clearLines() {
   int linesCleared = 0;
-  for (int row = height_ - 1; row > 0; row--) {
+
+  for (int row = 0; row < grid_.size(); row++) {
     auto &gridRow = grid_.at(row);
     bool isFilled = std::all_of(gridRow.begin(), gridRow.end(), [](GridItem item) { return !!item.val; });
 
     if (isFilled) {
       linesCleared++;
+      grid_.erase(grid_.begin() + row);
     }
   }
 
   // for each of the lines, remove from bottom and add a new row to top
   for (int i = 0; i < linesCleared; i++) {
-    grid_.pop_back();
     vector<GridItem> blankRow(width_, GridItem{nullopt});
     grid_.insert(grid_.begin(), blankRow);
   }

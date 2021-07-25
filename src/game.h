@@ -4,6 +4,7 @@
 
 #include "grid/grid.h"
 #include "view/View.h"
+#include "util/command.h"
 #include <memory>
 #include <string>
 
@@ -45,7 +46,9 @@ public:
 private:
   void gameLoop();
 
-  void processCommand();
+  static std::pair<int, Command> readCommand();
+
+  void processCommand(int multiplier, Command c);
   //  { grid_->draw(); }
 };
 

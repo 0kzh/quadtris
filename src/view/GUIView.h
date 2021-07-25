@@ -4,6 +4,7 @@
 #include "../grid/grid.h"
 #include "../util/color.h"
 #include "../util/types.h"
+#include "../util/command.h"
 #include "View.h"
 #include <memory>
 #include <X11/Xlib.h>
@@ -23,6 +24,8 @@ public:
   GUIView(int width, int height);
 
   void draw(std::shared_ptr<Grid> g) override;
+
+  Command getNextEvent();
 
 private:
   void drawRect(int x, int y, int width, int height, Color color);

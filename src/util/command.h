@@ -25,7 +25,8 @@ enum Command {
   CMD_O,
   CMD_T,
   CMD_RESTART,
-  CMD_HINT
+  CMD_HINT,
+  CMD_NOOP
 };
 
 inline std::map<std::string, Command> inputToCommand = {

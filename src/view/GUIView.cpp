@@ -102,6 +102,26 @@ void GUIView::draw(shared_ptr<Grid> g) {
   }
 }
 
+Command GUIView::getNextEvent() {
+  XNextEvent(dis, &event);
+  switch (event.type) {
+    case KeyPress:
+      switch (XLookupKeysym(&event.xkey, 0)) {
+        case XK_Left:
+          return CMD_LEFT;
+        case XK_Right:
+          return CMD_RIGHT;
+        case XK_Down:
+          return CMD_DOWN;
+        case XK_Up:
+          return CMD_CLOCKWISE;
+        case XK_space:
+          return CMD_DROP;
+      }
+  }
+  return CMD_NOOP;
+}
+
 void GUIView::drawRect(int x, int y, int width, int height, Color color) {
   XSetForeground(dis, gc, RGB(color.r, color.g, color.b));
   XFillRectangle(dis, win, gc, x, y, width, height);
