@@ -13,9 +13,10 @@ class GUIView : public View {
   int screen;
   Window win;
   GC gc;
+  XSizeHints *size_hints;
   XEvent event;
 public:
-  GUIView();
+  GUIView(int width, int height);
 
   void draw(std::shared_ptr<Grid> g) override;
 
