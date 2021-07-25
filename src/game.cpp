@@ -1,14 +1,19 @@
 #include "game.h"
 #include "view/TextView.h"
+#include "view/GUIView.h"
 #include "util/command.h"
 #include "util/helper.h"
 #include <iostream>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xos.h>
 
 using namespace std;
 
 Game::Game(bool textOnly, int seed, string scriptFile, int initialLevel)
     : textOnly_(textOnly), scriptFile_(scriptFile), curLevelIdx_(initialLevel) {
   views_.push_back(make_shared<TextView>(TextView()));
+  views_.push_back(make_shared<GUIView>(GUIView()));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
 }
 
@@ -25,17 +30,16 @@ void addBlockIfNone(shared_ptr<Grid> g) {
 }
 
 void Game::gameLoop() {
+  addBlockIfNone(grid_);
   for (auto &v : views_) {
-    addBlockIfNone(grid_);
-
     v->draw(grid_);
-    processCommand();
-
-    int linesCleared = grid_->clearLines();
-    cout << "lines cleared: " << linesCleared << endl;
-
-    addBlockIfNone(grid_);
   }
+  processCommand();
+
+  int linesCleared = grid_->clearLines();
+  cout << "lines cleared: " << linesCleared << endl;
+
+  addBlockIfNone(grid_);
 }
 
 void Game::processCommand() {

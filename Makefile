@@ -1,6 +1,6 @@
 
 CXX = g++
-CXXFLAGS = -std=c++17 -g -Wall -MMD # -MMD builds dependency lists in .d files
+CXXFLAGS = -std=c++17 -g -Wall -MMD -lX11 # -MMD builds dependency lists in .d files
 
 SRC = $(shell find src/ -name "*.cpp")
 HEADERS = $(shell find src/ -name "*.h")
