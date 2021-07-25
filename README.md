@@ -7,11 +7,20 @@
     - [x] multipliers
 - [ ] random number generator
 - [ ] block factory and levels
+- [ ] next block indicator
+- [ ] add score, level text
 - [x] block movement logic
     - [x] directional movement
     - [x] rotation
     - [x] dropping
+    - [ ] is heavy logic
+- [ ] game over logic
 - [x] drawing of grid and blocks
 - [x] clearing of lines
 - [ ] scoring logic
 - [ ] GUI
+    - [x] print grid and blocks
+    - [x] add keyboard events
+    - [ ] add sound
+    - [ ] add score, level, controls
+    - [ ] add next block
