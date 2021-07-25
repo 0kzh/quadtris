@@ -13,7 +13,7 @@ using namespace std;
 Game::Game(bool textOnly, int seed, string scriptFile, int initialLevel)
     : textOnly_(textOnly), scriptFile_(scriptFile), curLevelIdx_(initialLevel) {
   views_.push_back(make_shared<TextView>(TextView()));
-  views_.push_back(make_shared<GUIView>(GUIView()));
+  views_.push_back(make_shared<GUIView>(GUIView(400, 800)));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
 }
 
@@ -23,7 +23,7 @@ void Game::start() {
   }
 }
 
-void addBlockIfNone(shared_ptr<Grid> g) {
+void addBlockIfNone(const shared_ptr<Grid> &g) {
   if (!g->fallingBlock()) {
     g->setFallingBlock(Block{T, false});
   }

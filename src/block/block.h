@@ -10,6 +10,7 @@
 inline GridItem __ = GridItem{std::nullopt};
 inline GridItem I_ = GridItem{I};
 inline GridItem J_ = GridItem{J};
+inline GridItem L_ = GridItem{L};
 inline GridItem O_ = GridItem{O};
 inline GridItem S_ = GridItem{S};
 inline GridItem Z_ = GridItem{Z};
@@ -20,6 +21,10 @@ inline std::map<BlockType, GridShape> blockTypeToData = {
     {J, GridShape{
         {J_, __, __, __},
         {J_, J_, J_, J_}
+    }},
+    {L, GridShape{
+        {__, __, __, L_},
+        {L_, L_, L_, L_}
     }},
     {O, GridShape{
         {O_, O_},

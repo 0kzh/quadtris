@@ -65,12 +65,66 @@ GUIView::GUIView(int width, int height) {
 }
 
 void GUIView::draw(shared_ptr<Grid> g) {
-  XNextEvent(dis, &event);
-  if (event.type == Expose && event.xexpose.count == 0) {
-    redraw();
+  redraw();
+
+  // deep copy grid
+  GridShape gridToPrint = g->grid();
+
+  // add the falling block
+  const auto &fallingBlock = g->fallingBlock();
+  if (fallingBlock) {
+    Block b = *fallingBlock;
+    for (int r = 0; r < b.height(); r++) {
+      for (int c = 0; c < b.width(); c++) {
+        int gridRow = b.bottomLeft().y - (b.height() - 1) + r;
+        int gridCol = b.bottomLeft().x + c;
+
+        if (b.shape()[r][c].val) {
+          gridToPrint[gridRow][gridCol] = GridItem{b.type()};
+        }
+      }
+    }
   }
+
+  for (int row = 0; row < g->height(); row++) {
+    const vector<GridItem> &rowVec = gridToPrint.at(row);
+    for (int col = 0; col < rowVec.size(); col++) {
+      GridItem block = gridToPrint[row][col];
+
+      if (block.val) {
+        drawCell(row, col, *block.val);
+      }
+    }
+  }
+
+  while (XPending(dis)) {
+    XNextEvent(dis, &event);
+  }
+}
+
+void GUIView::drawRect(int x, int y, int width, int height, Color color) {
+  XSetForeground(dis, gc, RGB(color.r, color.g, color.b));
+  XFillRectangle(dis, win, gc, x, y, width, height);
+}
+
+void GUIView::drawCell(int row, int col, BlockType block) {
+  Color base = blockColors[block].base;
+  Color highlight = blockColors[block].highlight;
+  Color shadow = blockColors[block].shadow;
+
+  int edge = GRID_SIZE / 8;
+  int x = col * GRID_SIZE;
+  int y = row * GRID_SIZE;
+
+  drawRect(x, y, GRID_SIZE, GRID_SIZE, base);
+  drawRect(x + edge, y, GRID_SIZE - edge, GRID_SIZE - edge, highlight);
+  drawRect(x + edge, y + edge, GRID_SIZE - edge * 2, GRID_SIZE - edge * 2, shadow);
+}
+
+unsigned long GUIView::RGB(int r, int g, int b) {
+  return b + (g << 8) + (r << 16);
 }
 
 void GUIView::redraw() {
   XClearWindow(dis, win);
-};
+}

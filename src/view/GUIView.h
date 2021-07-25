@@ -2,6 +2,8 @@
 #define GUI_VIEW_H
 
 #include "../grid/grid.h"
+#include "../util/color.h"
+#include "../util/types.h"
 #include "View.h"
 #include <memory>
 #include <X11/Xlib.h>
@@ -15,12 +17,21 @@ class GUIView : public View {
   GC gc;
   XSizeHints *size_hints;
   XEvent event;
+  const int GRID_SIZE = 32;
+
 public:
   GUIView(int width, int height);
 
   void draw(std::shared_ptr<Grid> g) override;
 
+private:
+  void drawRect(int x, int y, int width, int height, Color color);
+
+  void drawCell(int row, int col, BlockType b);
+
   void redraw();
+
+  static unsigned long RGB(int r, int g, int b);
 };
 
 #endif

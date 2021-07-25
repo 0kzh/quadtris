@@ -6,12 +6,13 @@
 #include <map>
 
 enum BlockType {
-  I, J, O, S, Z, T
+  I, J, L, O, S, Z, T
 };
 
 inline std::map<BlockType, char> blockTypeToString{
     {I, 'I'},
     {J, 'J'},
+    {L, 'L'},
     {O, 'O'},
     {S, 'S'},
     {Z, 'Z'},
@@ -32,6 +33,6 @@ struct GridItem {
 
 typedef std::vector<std::vector<GridItem>> GridShape;
 
-std::ostream &operator<<(std::ostream &os, const GridItem g);
+std::ostream &operator<<(std::ostream &os, GridItem g);
 
 #endif
