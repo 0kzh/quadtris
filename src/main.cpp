@@ -1,4 +1,5 @@
 #include "game.h"
+#include <stdlib.h>   
 #include <iostream>
 #include <string>
 
@@ -34,6 +35,7 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  Game game = Game(textOnly, seed, scriptFile, startLevel);
+  srand(seed);
+  Game game = Game(textOnly, scriptFile, startLevel);
   game.start();
 }

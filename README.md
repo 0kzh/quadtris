@@ -6,7 +6,8 @@
     - [x] fuzzy matching
     - [x] multipliers
 - [ ] random number generator
-- [ ] block factory and levels
+- [ ] block factory 
+- [ ] levels
 - [ ] next block indicator
 - [ ] add score, level text
 - [x] block movement logic
