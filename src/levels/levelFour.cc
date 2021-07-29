@@ -9,5 +9,5 @@ char LevelFour::returnBlock() {
 }
 
 bool LevelFour::isHeavy() {
-    return false;
+    return true;
 }
