@@ -74,6 +74,8 @@ public:
   int height() const;
 
   int width() const;
+    
+  int genLevel() const;
 
   Point bottomLeft() const;
 
