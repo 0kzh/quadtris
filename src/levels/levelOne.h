@@ -1,5 +1,5 @@
-#ifndef LEVELONE_H
-#define LEVELONE_H
+#ifndef LEVEL_ONE_H
+#define LEVEL_ONE_H
 
 #include "level.h"
 
