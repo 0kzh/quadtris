@@ -31,8 +31,8 @@ Game::start() {
 
 void Game::addBlockIfNone(const shared_ptr<Grid> &g) {
   shared_ptr<Level> curLevel = levelSequence_.at(curLevelIdx_);
-  if (!g->fallingBlock()) {
-    g->setFallingBlock(curLevel->makeBlock());
+  while (!g->fallingBlock()) {
+    g->setNextBlocks(curLevel->makeBlock());
   }
 }
 

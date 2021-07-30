@@ -26,10 +26,11 @@ void TextView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
       }
     }
   }
-
+  //four spaces
   string highScoreStr = "    Hi-Score: " + to_string(hiScore);
   string levelStr = "    Level: ";
   string scoreStr = "    Score: ";
+  string nextStr = "    Next: ";
 
   cout << levelStr << right << setw(highScoreStr.length() - levelStr.length()) << level << endl;
   cout << scoreStr << right << setw(highScoreStr.length() - scoreStr.length()) << score << endl;
@@ -46,4 +47,22 @@ void TextView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
     cout << std::endl;
   }
   cout << "    -----------" << endl;
+  cout << nextStr << endl;
+
+  const auto &nextBlock = g->nextBlock();
+  if(nextBlock) {
+    Block nb = *nextBlock;
+    for(int nr = 0; nr < nb.height(); nr++) {
+      cout << "    ";
+      for(int nc = 0; nc < nb.width(); nc++) {
+        if (nb.shape()[nr][nc].val) {
+          cout << GridItem{nb.type()};
+        } else {
+          cout << " ";
+        }
+      }
+      cout << endl;
+    }
+    cout << endl;
+  }
 }

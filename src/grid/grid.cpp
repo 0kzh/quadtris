@@ -36,8 +36,13 @@ std::optional<Block> &Grid::fallingBlock() {
   return fallingBlock_;
 }
 
-void Grid::setFallingBlock(const optional<Block> &b) {
-  fallingBlock_ = b;
+std::optional<Block> &Grid::nextBlock() {
+  return nextBlock_;
+}
+
+void Grid::setNextBlocks(const optional<Block> &b) {
+  fallingBlock_ = nextBlock_;
+  nextBlock_ = b;
 }
 
 int Grid::clearLines() {

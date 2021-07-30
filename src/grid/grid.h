@@ -11,6 +11,7 @@ class Grid {
   int height_;
   int width_;
   std::optional<Block> fallingBlock_;
+  std::optional<Block> nextBlock_;
 
   GridShape grid_;
 
@@ -28,8 +29,9 @@ public:
   GridShape &grid();
 
   std::optional<Block> &fallingBlock();
+  std::optional<Block> &nextBlock();
 
-  void setFallingBlock(const std::optional<Block> &);
+  void setNextBlocks(const std::optional<Block> &);
 
   // clears lines at bottom of grid. returns number of lines cleared.
   int clearLines();
