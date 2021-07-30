@@ -6,8 +6,7 @@
 class LevelFour : public Level {
     public:
         LevelFour();
-        char returnBlock();
-        bool isHeavy();
+        Block makeBlock() override;
 };
 
 #endif
