@@ -29,6 +29,7 @@ enum RotationDirection {
 
 struct GridItem {
   std::optional<BlockType> val = std::nullopt;
+  std::optional<int> blockId = std::nullopt;
 };
 
 typedef std::vector<std::vector<GridItem>> GridShape;

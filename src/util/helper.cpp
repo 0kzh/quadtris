@@ -2,7 +2,7 @@
 
 using namespace std;
 
-pair<int, string> splitMultipliedInput(const string &input) {
+pair<int, string> Helper::splitMultipliedInput(const string &input) {
   string digStr;
   string command;
   bool parsingCommand = false;
@@ -17,4 +17,9 @@ pair<int, string> splitMultipliedInput(const string &input) {
   }
 
   return make_pair(digStr == "" ? 1 : stoi(digStr), command);
+}
+
+int Helper::generateUniqueId() {
+  static std::atomic<std::uint32_t> uid{0};
+  return ++uid;
 }

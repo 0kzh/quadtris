@@ -5,6 +5,7 @@
 #include "../block/block.h"
 #include <optional>
 #include <vector>
+#include <map>
 
 class Grid {
   int height_;
@@ -14,6 +15,10 @@ class Grid {
   GridShape grid_;
 
 public:
+  static std::map<int, int> blockIdToCount;
+  static std::map<int, int> blockIdToCreatedAtLvl;
+  static std::map<int, int> blockIdToScore;
+
   Grid(int height, int width);
 
   int height() const;

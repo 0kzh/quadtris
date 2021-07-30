@@ -1,9 +1,14 @@
 #include "grid.h"
 #include "../util/types.h"
+#include "../game.h"
 #include <optional>
 #include <vector>
+#include <cmath>
 
 using namespace std;
+
+map<int, int> Grid::blockIdToCount;
+map<int, int> Grid::blockIdToCreatedAtLvl;
 
 Grid::Grid(int height, int width) {
   height_ = height;
@@ -36,13 +41,27 @@ void Grid::setFallingBlock(const optional<Block> &b) {
 }
 
 int Grid::clearLines() {
+  int scoredPoints = 0;
   int linesCleared = 0;
 
   for (int row = 0; row < grid_.size(); row++) {
     auto &gridRow = grid_.at(row);
     bool isFilled = std::all_of(gridRow.begin(), gridRow.end(), [](GridItem item) { return !!item.val; });
 
+
     if (isFilled) {
+      for (auto &block : gridRow) {
+        if (block.blockId) {
+          blockIdToCount[*block.blockId]--;
+          cout << *block.blockId << ": " << blockIdToCount[*block.blockId] << endl;
+          if (blockIdToCount[*block.blockId] == 0) {
+            // bonus points
+            scoredPoints += (int) pow(blockIdToCreatedAtLvl[*block.blockId] + 1, 2);
+            blockIdToCount.erase(blockIdToCount.find(*block.blockId));
+            blockIdToCreatedAtLvl.erase(blockIdToCount.find(*block.blockId));
+          }
+        }
+      }
       linesCleared++;
       grid_.erase(grid_.begin() + row);
     }
@@ -54,5 +73,10 @@ int Grid::clearLines() {
     grid_.insert(grid_.begin(), blankRow);
   }
 
-  return linesCleared;
+  // calculate score based on scored points
+  if (linesCleared == 0) {
+    return 0;
+  }
+
+  return (int) pow((Game::curLevelIdx_ + 1) + linesCleared, 2);
 }

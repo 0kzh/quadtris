@@ -1,4 +1,7 @@
 #include "../util/types.h"
+#include "../util/helper.h"
+#include "../grid/grid.h"
+#include "../game.h"
 #include "block.h"
 #include <functional>
 
@@ -6,6 +9,20 @@ using namespace std;
 
 Block::Block(BlockType type, bool isHeavy) : isHeavy_(isHeavy), type_(type) {
   shape_ = blockTypeToData[type];
+
+  // generate unique ID and assign to each block
+  // this helps track when this block is destroyed for bonus scoring
+  int blockId = Helper::generateUniqueId();
+  for (auto &r : shape_) {
+    for (auto &block : r) {
+      if (block.val) {
+        block.blockId = blockId;
+        Grid::blockIdToCount[blockId]++;
+      }
+    }
+  }
+  Grid::blockIdToCreatedAtLvl[blockId] = Game::curLevelIdx_ + 1;
+
   height_ = shape_.size();
   width_ = shape_[0].size();
 
@@ -98,7 +115,7 @@ void Block::copyToGrid(GridShape &g) {
       int gridCol = x + c;
 
       if (shape_[r][c].val) {
-        g[gridRow][gridCol] = GridItem{*shape_[r][c].val};
+        g[gridRow][gridCol] = GridItem{*shape_[r][c].val, *shape_[r][c].blockId};
       }
     }
   }

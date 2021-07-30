@@ -21,13 +21,14 @@ class Game {
   bool textOnly_;
   string scriptFile_;
 
-  int curLevelIdx_;
   // Level[] levelSequence_;
 
   const int EXTRA_ROWS = 3;
 
 public:
-  Game(bool textOnly, int seed, string scriptFile, int initialLevel);
+  static int curLevelIdx_;
+
+  Game(bool textOnly, int seed, string scriptFile);
 
   void start();
 
@@ -50,8 +51,6 @@ private:
   static std::pair<int, Command> readCommand();
 
   void processCommand(int multiplier, Command c);
-
-  int calculateScore(int linesCleared) const;
 };
 
 #endif

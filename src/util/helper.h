@@ -3,6 +3,12 @@
 
 #include <string>
 
-std::pair<int, std::string> splitMultipliedInput(const std::string &);
+class Helper {
+
+public:
+  static std::pair<int, std::string> splitMultipliedInput(const std::string &);
+
+  static int generateUniqueId();
+};
 
 #endif
