@@ -176,6 +176,10 @@ int Block::width() const {
   return width_;
 }
 
+int Block::genLevel() const {
+  return generatedLvl_;
+}
+
 Point Block::bottomLeft() const {
   return bottomLeft_;
 }
