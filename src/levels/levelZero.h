@@ -7,7 +7,7 @@ class LevelZero : public Level {
     private:
         std::string filename_;
     public:
-        LevelOne(std::string);
+        LevelZero(std::string);
         Block makeBlock() override;
 };
 
