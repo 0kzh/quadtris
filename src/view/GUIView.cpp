@@ -64,7 +64,7 @@ GUIView::GUIView(int width, int height) {
   XMapRaised(dis, win);
 }
 
-void GUIView::draw(shared_ptr<Grid> g) {
+void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
   redraw();
 
   // deep copy grid

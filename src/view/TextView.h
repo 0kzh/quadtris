@@ -8,7 +8,8 @@
 class TextView : public View {
 public:
   TextView();
-  void draw(std::shared_ptr<Grid> g) override;
+
+  void draw(std::shared_ptr<Grid> g, int level, int score, int highScore) override;
 };
 
 #endif

@@ -8,7 +8,8 @@
 
 class View {
 public:
-  virtual void draw(std::shared_ptr<Grid> g) = 0;
+  virtual void draw(std::shared_ptr<Grid> g, int level, int score, int highScore) = 0;
+
   virtual ~View() = default;
 };
 

@@ -23,7 +23,7 @@ class GUIView : public View {
 public:
   GUIView(int width, int height);
 
-  void draw(std::shared_ptr<Grid> g) override;
+  void draw(std::shared_ptr<Grid> g, int level, int score, int highScore) override;
 
   Command getNextEvent();
 

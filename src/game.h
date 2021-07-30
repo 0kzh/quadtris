@@ -12,6 +12,7 @@ using namespace std;
 
 class Game {
   int score_;
+  int hiScore_;
   shared_ptr<Grid> grid_;
   vector<shared_ptr<View>> views_;
   // unique_ptr<Random> random_;
@@ -30,7 +31,7 @@ public:
 
   void start();
 
-  void update();
+  void reset();
   // {
   //   textOnly_ = textOnly;
   //   scriptFile_ = scriptFile;
@@ -49,7 +50,8 @@ private:
   static std::pair<int, Command> readCommand();
 
   void processCommand(int multiplier, Command c);
-  //  { grid_->draw(); }
+
+  int calculateScore(int linesCleared) const;
 };
 
 #endif

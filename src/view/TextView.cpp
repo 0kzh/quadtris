@@ -7,7 +7,7 @@ using namespace std;
 
 TextView::TextView() {}
 
-void TextView::draw(shared_ptr<Grid> g) {
+void TextView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
   // deep copy grid
   GridShape gridToPrint = g->grid();
 
@@ -27,6 +27,13 @@ void TextView::draw(shared_ptr<Grid> g) {
     }
   }
 
+  string highScoreStr = "    Hi-Score: " + to_string(hiScore);
+  string levelStr = "    Level: ";
+  string scoreStr = "    Score: ";
+
+  cout << levelStr << right << setw(highScoreStr.length() - levelStr.length()) << level << endl;
+  cout << scoreStr << right << setw(highScoreStr.length() - scoreStr.length()) << score << endl;
+  cout << highScoreStr << endl;
   // print everything
   cout << "    -----------" << endl;
   for (int row = 0; row < g->height(); row++) {
