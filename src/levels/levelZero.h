@@ -3,7 +3,7 @@
 
 #include "level.h"
 
-class LevelOne : public Level {
+class LevelZero : public Level {
     private:
         std::string filename_;
     public:
