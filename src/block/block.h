@@ -51,6 +51,7 @@ class Block {
 
   int height_;
   int width_;
+  int generatedLvl_;
   Point bottomLeft_;
 
 public:
