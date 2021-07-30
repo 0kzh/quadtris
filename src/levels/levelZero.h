@@ -1,5 +1,5 @@
-#ifndef LEVEL_ONE_H_
-#define LEVEL_ONE_H_
+#ifndef LEVEL_ZERO_H_
+#define LEVEL_ZERO_H_
 
 #include "level.h"
 
@@ -8,8 +8,7 @@ class LevelOne : public Level {
         std::string filename_;
     public:
         LevelOne(std::string);
-        char returnBlock();
-        bool isHeavy();
+        Block makeBlock() override;
 };
 
 #endif
