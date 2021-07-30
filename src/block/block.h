@@ -55,7 +55,7 @@ class Block {
   Point bottomLeft_;
 
 public:
-  Block(BlockType type, bool isHeavy);
+  Block(BlockType type, bool isHeavy, int lvl);
 
   // moves the block and returns a bool indicating if we should remove the block;
   bool move(Direction d, GridShape &g);
