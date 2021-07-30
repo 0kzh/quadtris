@@ -11,5 +11,5 @@ Block LevelOne::makeBlock() {
   int probs[12] = {0,0,1,1,2,2,3,3,4,5,6,6};
   int r = round(rand() / RAND_MAX * 11);
 
-  return Block{static_cast<BlockType>(probs[r]), false};
+  return Block{static_cast<BlockType>(probs[r]), false, 1};
 }
