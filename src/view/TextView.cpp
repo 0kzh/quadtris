@@ -55,11 +55,7 @@ void TextView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
     for(int nr = 0; nr < nb.height(); nr++) {
       cout << "    ";
       for(int nc = 0; nc < nb.width(); nc++) {
-        if (nb.shape()[nr][nc].val) {
-          cout << GridItem{nb.type()};
-        } else {
-          cout << " ";
-        }
+        cout << nb.shape()[nr][nc];
       }
       cout << endl;
     }
