@@ -16,7 +16,7 @@ Game::Game(bool textOnly, int seed, string scriptFile)
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
 
   // TODO: add other levels
-  levelSequence_ = {make_shared<LevelOne>(LevelOne())};
+  levelSequence_ = {make_shared<LevelZero>(LevelZero(scriptFile_)),make_shared<LevelOne>(LevelOne()),make_shared<LevelTwo>(LevelTwo()),make_shared<LevelThree>(LevelThree()),make_shared<LevelFour>(LevelFour())};
 }
 
 int Game::curLevelIdx_ = 0;
