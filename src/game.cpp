@@ -64,9 +64,7 @@ void Game::gameLoop() {
 
   processCommand(multiplier, c);
 
-  int cleared = grid_->clearLines();
-  score_ += (cleared + curLevelIdx) * (cleared + curLevelIdx);
-  // also add bonus points (lvl generated + 1)^2
+  score_ += grid_->clearLines();
   hiScore_ = max(hiScore_, score_);
 
   addBlockIfNone(grid_);
