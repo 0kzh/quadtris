@@ -2,7 +2,8 @@
 #include "util/helper.h"
 #include "view/GUIView.h"
 #include "view/TextView.h"
-#include <cmath>
+#include "levels/levelOne.h"
+#include <memory>
 #include <iostream>
 
 using namespace std;
@@ -13,6 +14,9 @@ Game::Game(bool textOnly, int seed, string scriptFile)
   views_.push_back(make_shared<TextView>(TextView()));
   //  views_.push_back(make_shared<GUIView>(GUIView(400, 800)));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
+
+  // TODO: add other levels
+  levelSequence_ = {make_shared<LevelOne>(LevelOne())};
 }
 
 int Game::curLevelIdx_ = 0;
@@ -25,9 +29,10 @@ Game::start() {
   }
 }
 
-void addBlockIfNone(const shared_ptr<Grid> &g) {
+void Game::addBlockIfNone(const shared_ptr<Grid> &g) {
+  shared_ptr<Level> curLevel = levelSequence_.at(curLevelIdx_);
   if (!g->fallingBlock()) {
-    g->setFallingBlock(Block{T, false});
+    g->setFallingBlock(curLevel->makeBlock());
   }
 }
 

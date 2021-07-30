@@ -9,6 +9,8 @@ enum BlockType {
   I, J, L, O, S, Z, T
 };
 
+const int NUM_BLOCK_TYPES = 7;
+
 inline std::map<BlockType, char> blockTypeToString{
     {I, 'I'},
     {J, 'J'},

@@ -1,18 +1,16 @@
-#ifndef LEVEL_H_
-#define LEVEL_H_
+#ifndef LEVEL_H
+#define LEVEL_H
 
+#include "../block/block.h"
 #include <stdlib.h>
 #include <math.h>
 #include <string>
 
 class Level {
-    protected:
-        std::string blockChars_;
-        Level();
-    public:
-        int levelNum_;
-        virtual char returnBlock() = 0;
-        virtual bool isHeavy() = 0;
+public:
+  virtual Block makeBlock() = 0;
+
+  virtual ~Level() = default;
 };
 
 #endif

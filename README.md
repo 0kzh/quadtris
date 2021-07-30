@@ -5,8 +5,8 @@
     - [x] command line flags
     - [x] fuzzy matching
     - [x] multipliers
-- [ ] random number generator
-- [ ] block factory
+- [x] random number generator
+- [x] block factory
 - [ ] levels
 - [ ] next block indicator
 - [x] add score, level text

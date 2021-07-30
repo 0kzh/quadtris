@@ -5,6 +5,7 @@
 #include "grid/grid.h"
 #include "view/View.h"
 #include "util/command.h"
+#include "levels/level.h"
 #include <memory>
 #include <string>
 
@@ -21,7 +22,7 @@ class Game {
   bool textOnly_;
   string scriptFile_;
 
-  // Level[] levelSequence_;
+  vector<shared_ptr<Level>> levelSequence_;
 
   const int EXTRA_ROWS = 3;
 
@@ -51,6 +52,8 @@ private:
   static std::pair<int, Command> readCommand();
 
   void processCommand(int multiplier, Command c);
+
+  void addBlockIfNone(const std::shared_ptr<Grid> &g);
 };
 
 #endif

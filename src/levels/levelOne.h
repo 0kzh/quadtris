@@ -1,15 +1,14 @@
-#ifndef LEVEL_ONE_H_
-#define LEVEL_ONE_H_
+#ifndef LEVELONE_H
+#define LEVELONE_H
 
 #include "level.h"
 
 class LevelOne : public Level {
-    private:
-        std::string filename_;
-    public:
-        LevelOne(std::string);
-        char returnBlock();
-        bool isHeavy();
+public:
+  LevelOne();
+
+  Block makeBlock() override;
 };
+
 
 #endif
