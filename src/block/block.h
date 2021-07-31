@@ -44,15 +44,6 @@ inline std::map<BlockType, GridShape> blockTypeToData = {
     }}
 };
 
-inline std::map<char, BlockType> charToBlockType = {
-    {'I', I},
-    {'J', J},
-    {'L', L},
-    {'O', O},
-    {'S', S},
-    {'T', T},
-    {'Z', Z}
-};
 
 class Block {
   bool isHeavy_;

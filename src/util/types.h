@@ -11,7 +11,7 @@ enum BlockType {
 
 const int NUM_BLOCK_TYPES = 7;
 
-inline std::map<BlockType, char> blockTypeToString{
+inline std::map<BlockType, char> blockTypeToChar{
     {I, 'I'},
     {J, 'J'},
     {L, 'L'},
@@ -19,6 +19,16 @@ inline std::map<BlockType, char> blockTypeToString{
     {S, 'S'},
     {Z, 'Z'},
     {T, 'T'}
+};
+
+inline std::map<char, BlockType> charToBlockType = {
+    {'I', I},
+    {'J', J},
+    {'L', L},
+    {'O', O},
+    {'S', S},
+    {'T', T},
+    {'Z', Z}
 };
 
 enum Direction {
