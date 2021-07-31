@@ -86,7 +86,18 @@ void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
     }
   }
 
-  for (int row = 0; row < g->height(); row++) {
+  // add padding for walls
+  for (auto &row : gridToPrint) {
+    row.insert(row.begin(), GridItem{WALL});
+    row.push_back(GridItem{WALL});
+  }
+
+  vector<GridItem> floor(g->width() + 2, GridItem{WALL});
+  gridToPrint.push_back(floor);
+
+
+  // print it!
+  for (int row = 0; row < g->height() + 1; row++) {
     const vector<GridItem> &rowVec = gridToPrint.at(row);
     for (int col = 0; col < rowVec.size(); col++) {
       GridItem block = gridToPrint[row][col];
@@ -136,9 +147,9 @@ void GUIView::drawCell(int row, int col, BlockType block) {
   int x = col * GRID_SIZE;
   int y = row * GRID_SIZE;
 
-  drawRect(x, y, GRID_SIZE, GRID_SIZE, base);
+  drawRect(x, y, GRID_SIZE, GRID_SIZE, shadow);
   drawRect(x + edge, y, GRID_SIZE - edge, GRID_SIZE - edge, highlight);
-  drawRect(x + edge, y + edge, GRID_SIZE - edge * 2, GRID_SIZE - edge * 2, shadow);
+  drawRect(x + edge, y + edge, GRID_SIZE - edge * 2, GRID_SIZE - edge * 2, base);
 }
 
 unsigned long GUIView::RGB(int r, int g, int b) {

@@ -6,7 +6,7 @@
 #include <map>
 
 enum BlockType {
-  I, J, L, O, S, Z, T
+  I, J, L, O, S, Z, T, WALL
 };
 
 const int NUM_BLOCK_TYPES = 7;
