@@ -22,5 +22,5 @@ LevelZero::LevelZero(std::string blkfile) {
 
 Block LevelZero::makeBlock() {
   cur_ = (cur_ + 1) % blocks_.size();
-  return Block{blocks_[cur_ - 1], false, 0};
+  return Block{blocks_[cur_], false, 0};
 }

@@ -19,12 +19,12 @@ inline GridItem T_ = GridItem{T};
 inline std::map<BlockType, GridShape> blockTypeToData = {
     {I, GridShape{{I_, I_, I_, I_}}},
     {J, GridShape{
-        {J_, __, __, __},
-        {J_, J_, J_, J_}
+        {J_, __, __},
+        {J_, J_, J_}
     }},
     {L, GridShape{
-        {__, __, __, L_},
-        {L_, L_, L_, L_}
+        {__, __, L_},
+        {L_, L_, L_}
     }},
     {O, GridShape{
         {O_, O_},

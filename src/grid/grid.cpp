@@ -32,9 +32,9 @@ int Grid::width() const { return width_; }
 
 GridShape &Grid::grid() { return grid_; }
 
-void Grid::restart() { 
+void Grid::restart() {
   grid_.clear();
-  fallingBlock_ = nullopt; 
+  fallingBlock_ = nullopt;
   nextBlock_ = nullopt;
 }
 
@@ -64,12 +64,12 @@ int Grid::clearLines() {
       for (auto &block : gridRow) {
         if (block.blockId) {
           blockIdToCount[*block.blockId]--;
-          cout << *block.blockId << ": " << blockIdToCount[*block.blockId] << endl;
           if (blockIdToCount[*block.blockId] == 0) {
             // bonus points
             scoredPoints += (int) pow(blockIdToCreatedAtLvl[*block.blockId] + 1, 2);
+
             blockIdToCount.erase(blockIdToCount.find(*block.blockId));
-            blockIdToCreatedAtLvl.erase(blockIdToCount.find(*block.blockId));
+            blockIdToCreatedAtLvl.erase(blockIdToCreatedAtLvl.find(*block.blockId));
           }
         }
       }
