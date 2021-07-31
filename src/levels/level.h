@@ -2,8 +2,6 @@
 #define LEVEL_H
 
 #include "../block/block.h"
-#include <stdlib.h>
-#include <math.h>
 #include <string>
 
 class Level {

@@ -2,7 +2,11 @@
 #include "util/helper.h"
 #include "view/GUIView.h"
 #include "view/TextView.h"
+#include "levels/levelZero.h"
 #include "levels/levelOne.h"
+#include "levels/levelTwo.h"
+#include "levels/levelThree.h"
+#include "levels/levelFour.h"
 #include <memory>
 #include <iostream>
 
@@ -15,8 +19,11 @@ Game::Game(bool textOnly, int seed, string scriptFile)
   //  views_.push_back(make_shared<GUIView>(GUIView(400, 800)));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
 
-  // TODO: add other levels
-  levelSequence_ = {make_shared<LevelZero>(LevelZero(scriptFile_)),make_shared<LevelOne>(LevelOne()),make_shared<LevelTwo>(LevelTwo()),make_shared<LevelThree>(LevelThree()),make_shared<LevelFour>(LevelFour())};
+  levelSequence_ = {make_shared<LevelZero>(LevelZero(scriptFile_)),
+                    make_shared<LevelOne>(LevelOne()),
+                    make_shared<LevelTwo>(LevelTwo()),
+                    make_shared<LevelThree>(LevelThree()),
+                    make_shared<LevelFour>(LevelFour())};
 }
 
 int Game::curLevelIdx_ = 0;
@@ -90,7 +97,7 @@ void Game::moveDown() {
   bool shouldRemove = grid_->fallingBlock()->move(DOWN, grid_->grid());
   if (shouldRemove) {
     grid_->fallingBlock() = nullopt;
-  } 
+  }
 }
 
 void Game::processCommand(int multiplier, Command cmd) {
@@ -135,15 +142,16 @@ void Game::processCommand(int multiplier, Command cmd) {
         break;
       case CMD_RESTART:
         grid_->restart();
-        (levelSequence_.at(0))->restart();
-        score_ = 0; multiplier = 0;
+//        (levelSequence_.at(0))->restart();
+        score_ = 0;
+        multiplier = 0;
         break;
       default:
         break;
     }
 
-    if(grid_->fallingBlock() && grid_->fallingBlock()->heavy() && 
-       cmd >= CMD_LEFT && cmd <= CMD_COUNTERCLOCKWISE) {
+    if (grid_->fallingBlock() && grid_->fallingBlock()->heavy() &&
+        cmd >= CMD_LEFT && cmd <= CMD_COUNTERCLOCKWISE) {
       moveDown();
     }
   }

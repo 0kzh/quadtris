@@ -1,27 +1,26 @@
 #include "levelZero.h"
+
 #include <iostream>
 #include <fstream>
+
+using namespace std;
 
 LevelZero::LevelZero(std::string blkfile) {
   filename_ = blkfile;
   cur_ = 0;
   char blk;
 
-  ifstream blklist (filename_);
+  ifstream blklist(filename_);
   if (blklist.is_open()) {
     while (!blklist.eof()) {
-        blklist >> blk;
-        blocks_.push_back(blk);
+      blklist >> blk;
+      blocks_.push_back(charToBlockType[blk]);
     }
   }
   blklist.close();
- }
+}
 
 Block LevelZero::makeBlock() {
   cur_ = (cur_ + 1) % blocks_.size();
-  return Block{static_cast<BlockType>blocks_[cur_-1], false, 0};
-}
-
-void  LevelZero::restart() {
-  cur_ = 0;
+  return Block{blocks_[cur_ - 1], false, 0};
 }
