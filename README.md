@@ -7,7 +7,7 @@
     - [x] multipliers
 - [x] random number generator
 - [x] block factory
-- [ ] levels
+- [x] levels
 - [x] next block indicator
 - [x] add score, level text
 - [x] block movement logic
