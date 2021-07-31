@@ -127,6 +127,12 @@ void Game::processCommand(int multiplier, Command cmd) {
           grid_->fallingBlock() = nullopt;
         }
         break;
+      case CMD_LEVELUP:
+        curLevelIdx_++;
+        break;
+      case CMD_LEVELDOWN:
+        curLevelIdx_--;
+        break;
       default:
         break;
     }
