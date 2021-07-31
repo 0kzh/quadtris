@@ -86,6 +86,13 @@ pair<int, Command> Game::readCommand() {
   return make_pair(multiplier, cmd);
 }
 
+void Game::moveDown() {
+  bool shouldRemove = grid_->fallingBlock()->move(DOWN, grid_->grid());
+  if (shouldRemove) {
+    grid_->fallingBlock() = nullopt;
+  } 
+}
+
 void Game::processCommand(int multiplier, Command cmd) {
   for (int i = 0; i < multiplier; i++) {
     switch (cmd) {
@@ -101,10 +108,7 @@ void Game::processCommand(int multiplier, Command cmd) {
         break;
       case CMD_DOWN:
         if (grid_->fallingBlock()) {
-          bool shouldRemove = grid_->fallingBlock()->move(DOWN, grid_->grid());
-          if (shouldRemove) {
-            grid_->fallingBlock() = nullopt;
-          }
+          moveDown();
         }
         break;
       case CMD_CLOCKWISE:
@@ -125,6 +129,11 @@ void Game::processCommand(int multiplier, Command cmd) {
         break;
       default:
         break;
+    }
+
+    if(grid_->fallingBlock() && grid_->fallingBlock()->heavy() && 
+       cmd >= CMD_LEFT && cmd <= CMD_COUNTERCLOCKWISE) {
+      moveDown();
     }
   }
 }

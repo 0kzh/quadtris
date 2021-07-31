@@ -18,7 +18,7 @@
 - [ ] game over logic
 - [x] drawing of grid and blocks
 - [x] clearing of lines
-- [ ] scoring logic
+- [x] scoring logic
 - [ ] GUI
     - [x] print grid and blocks
     - [x] add keyboard events

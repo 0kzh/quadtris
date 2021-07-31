@@ -54,6 +54,8 @@ private:
   void processCommand(int multiplier, Command c);
 
   void addBlockIfNone(const std::shared_ptr<Grid> &g);
+
+  void moveDown();
 };
 
 #endif

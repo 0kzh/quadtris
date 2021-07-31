@@ -82,6 +82,8 @@ public:
   BlockType type() const;
 
   std::vector<std::vector<GridItem>> shape() const;
+
+  bool heavy() const;
 };
 
 #endif

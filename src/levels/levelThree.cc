@@ -2,7 +2,6 @@
 
 LevelThree::LevelThree() { }
 
-
 /**
     int r = rand();  // gives you a number from 0 to RAND_MAX
     double d = r / RAND_MAX;  // gives you a number from 0 to 1

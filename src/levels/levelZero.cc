@@ -18,9 +18,6 @@ LevelZero::LevelZero(std::string blkfile) {
  }
 
 Block LevelZero::makeBlock() {
-  if (cur_ == blocks_.size()) {
-    cur_ = 0;
-  }
-  cur_++;
+  cur_ = (cur_ + 1) % blocks_.size();
   return Block{static_cast<BlockType>blocks_[cur_-1], false, 0};
 }

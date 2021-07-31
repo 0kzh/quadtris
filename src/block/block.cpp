@@ -165,6 +165,7 @@ bool Block::rotate(RotationDirection d, const GridShape &g) {
       break;
     }
   }
+
   return false;
 }
 
@@ -190,4 +191,8 @@ BlockType Block::type() const {
 
 GridShape Block::shape() const {
   return shape_;
+}
+
+bool Block::heavy() const {
+  return isHeavy_;
 }
