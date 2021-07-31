@@ -1,14 +1,16 @@
-#ifndef LEVEL_ZERO_H_
-#define LEVEL_ZERO_H_
+#ifndef LEVEL_ZERO_H
+#define LEVEL_ZERO_H
 
 #include "level.h"
+#include <vector>
 
 class LevelZero : public Level {
-    private:
-        std::string filename_;
-    public:
-        LevelZero(std::string);
-        Block makeBlock() override;
+  private:
+    int cur_;
+    std::vector<char> blocks_;
+  public:
+    LevelZero();
+    Block makeBlock() override;
 };
 
 #endif
