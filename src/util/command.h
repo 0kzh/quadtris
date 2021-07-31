@@ -72,7 +72,6 @@ inline std::optional<Command> matchCommand(const std::string &input) {
       foundCommand = inputToCommand[key];
     }
   }
-
   return foundCommand;
 }
 

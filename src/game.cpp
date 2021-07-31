@@ -28,9 +28,7 @@ Game::Game(bool textOnly, int seed, string scriptFile)
 
 int Game::curLevelIdx_ = 0;
 
-void
-
-Game::start() {
+void Game::start() {
   while (true) {
     gameLoop();
   }
@@ -80,16 +78,20 @@ void Game::gameLoop() {
 pair<int, Command> Game::readCommand() {
   int multiplier;
   string input;
+  std::optional<Command> opCmd;
 
   do {
+
     getline(cin, input);
     std::pair<int, string> multipliedInput = Helper::splitMultipliedInput(input);
     multiplier = multipliedInput.first;
     input = multipliedInput.second;
-  } while (!matchCommand(input));
+    opCmd = matchCommand(input);
 
-  Command cmd = *matchCommand(input);
+  } while (!opCmd || (multipler > 1 && *opCmd == CMD_RESTART || 
+    *opCmd == CMD_HINT || *opCmd == CMD_RANDOM || *opCmd == CMD_NORANDOM));
 
+  Command cmd = *opCmd;
   return make_pair(multiplier, cmd);
 }
 
