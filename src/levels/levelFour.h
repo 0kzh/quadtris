@@ -7,6 +7,7 @@ class LevelFour : public Level {
     public:
         LevelFour();
         Block makeBlock() override;
+        void setRandom(bool r);
 };
 
 #endif

@@ -81,8 +81,8 @@ pair<int, Command> Game::readCommand() {
   std::optional<Command> opCmd;
 
   do {
-
-    getline(cin, input);
+    cin >> input;
+    //getline(cin, input);
     std::pair<int, string> multipliedInput = Helper::splitMultipliedInput(input);
     multiplier = multipliedInput.first;
     input = multipliedInput.second;
@@ -91,8 +91,8 @@ pair<int, Command> Game::readCommand() {
   } while (!opCmd || (multipler > 1 && *opCmd == CMD_RESTART || 
     *opCmd == CMD_HINT || *opCmd == CMD_RANDOM || *opCmd == CMD_NORANDOM));
 
-  Command cmd = *opCmd;
-  return make_pair(multiplier, cmd);
+  //Command cmd = *opCmd;
+  return make_pair(multiplier, *opCmd);
 }
 
 void Game::moveDown() {
@@ -141,6 +141,19 @@ void Game::processCommand(int multiplier, Command cmd) {
         break;
       case CMD_LEVELDOWN:
         curLevelIdx_--;
+        break;
+      case CMD_NORANDOM:
+        (levelSequence_.at(3))->setRandom(false);
+        (levelSequence_.at(4))->setRandom(false);
+        break;
+      case CMD_RANDOM:
+        string file; cin >> file;
+        (levelSequence_.at(3))->setRandom(true);
+        (levelSequence_.at(3))->readFile(file);
+        (levelSequence_.at(4))->setRandom(true);
+        (levelSequence_.at(4))->readFile(file);
+        break;
+      case CMD_SEQUENCE:
         break;
       case CMD_RESTART:
         grid_->restart();

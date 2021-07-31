@@ -6,13 +6,8 @@
 #include <vector>
 
 class LevelZero : public Level {
-private:
-  int cur_;
-  std::string filename_;
-  std::vector<BlockType> blocks_;
 public:
   explicit LevelZero(std::string);
-
   Block makeBlock() override;
 };
 
