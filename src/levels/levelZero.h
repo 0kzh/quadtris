@@ -3,13 +3,14 @@
 
 #include "level.h"
 #include <vector>
+#include <string>
 
 class LevelZero : public Level {
   private:
     int cur_;
     std::vector<char> blocks_;
   public:
-    LevelZero();
+    LevelZero(std::string);
     Block makeBlock() override;
 };
 
