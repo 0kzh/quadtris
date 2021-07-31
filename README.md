@@ -14,7 +14,7 @@
     - [x] directional movement
     - [x] rotation
     - [x] dropping
-    - [ ] is heavy logic
+    - [x] is heavy logic
 - [ ] game over logic
 - [x] drawing of grid and blocks
 - [x] clearing of lines

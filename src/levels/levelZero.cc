@@ -21,3 +21,7 @@ Block LevelZero::makeBlock() {
   cur_ = (cur_ + 1) % blocks_.size();
   return Block{static_cast<BlockType>blocks_[cur_-1], false, 0};
 }
+
+void  LevelZero::restart() {
+  cur_ = 0;
+}

@@ -13,6 +13,7 @@ class LevelZero : public Level {
   public:
     LevelZero(std::string);
     Block makeBlock() override;
+    void restart();
 };
 
 #endif

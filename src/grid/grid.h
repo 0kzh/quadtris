@@ -32,6 +32,7 @@ public:
   std::optional<Block> &nextBlock();
 
   void setNextBlocks(const std::optional<Block> &);
+  void restart();
 
   // clears lines at bottom of grid. returns number of lines cleared.
   int clearLines();

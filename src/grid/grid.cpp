@@ -32,6 +32,12 @@ int Grid::width() const { return width_; }
 
 GridShape &Grid::grid() { return grid_; }
 
+void Grid::restart() { 
+  grid_.clear();
+  fallingBlock_ = nullopt; 
+  nextBlock_ = nullopt;
+}
+
 std::optional<Block> &Grid::fallingBlock() {
   return fallingBlock_;
 }

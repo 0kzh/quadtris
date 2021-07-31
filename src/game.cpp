@@ -133,6 +133,11 @@ void Game::processCommand(int multiplier, Command cmd) {
       case CMD_LEVELDOWN:
         curLevelIdx_--;
         break;
+      case CMD_RESTART:
+        grid_->restart();
+        (levelSequence_.at(0))->restart();
+        score_ = 0; multiplier = 0;
+        break;
       default:
         break;
     }
