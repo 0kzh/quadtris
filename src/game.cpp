@@ -14,7 +14,7 @@ using namespace std;
 
 Game::Game(bool textOnly, int seed, string scriptFile)
     : textOnly_(textOnly), scriptFile_(scriptFile),
-      score_(0), hiScore_(0) {
+      score_(0), hiScore_(0), readFromFile_(false) {
 //  views_.push_back(make_shared<TextView>(TextView()));
   views_.push_back(make_shared<GUIView>(GUIView(600, 608)));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
@@ -154,6 +154,9 @@ void Game::processCommand(int multiplier, Command cmd) {
         (levelSequence_.at(4))->readFile(file);
         break;
       case CMD_SEQUENCE:
+        string file; cin >> file;
+        fileInp.open(file);
+        //TBD
         break;
       case CMD_RESTART:
         grid_->restart();

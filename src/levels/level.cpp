@@ -2,10 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-Level::Level() {
-	cur_ = 0;
-	random_ = true;
-}
+Level::Level() : cur_(0), random_(true) { }
 
 void Level::readFile(std::string f) {
   filename_ = f;
