@@ -171,6 +171,10 @@ Command GUIView::getNextEvent() {
           return CMD_CLOCKWISE;
         case XK_space:
           return CMD_DROP;
+        case XK_plus:
+          return CMD_LEVELUP;
+        case XK_minus:
+          return CMD_LEVELDOWN;
       }
   }
   return CMD_NOOP;

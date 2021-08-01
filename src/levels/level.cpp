@@ -2,13 +2,13 @@
 #include <iostream>
 #include <fstream>
 
-Level::Level() : cur_(0), random_(true) { }
+Level::Level() : cur_(0), random_(true) {}
 
 void Level::readFile(std::string f) {
   filename_ = f;
   char blk;
 
-  ifstream blklist(filename_);
+  std::ifstream blklist(filename_);
   if (blklist.is_open()) {
     while (!blklist.eof()) {
       blklist >> blk;
@@ -18,6 +18,6 @@ void Level::readFile(std::string f) {
   blklist.close();
 }
 
-void setRandom(bool r) {
-	random_ = r;
+void Level::setRandom(bool r) {
+  random_ = r;
 }

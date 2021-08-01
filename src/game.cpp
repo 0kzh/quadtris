@@ -88,8 +88,8 @@ pair<int, Command> Game::readCommand() {
     input = multipliedInput.second;
     opCmd = matchCommand(input);
 
-  } while (!opCmd || (multipler > 1 && *opCmd == CMD_RESTART || 
-    *opCmd == CMD_HINT || *opCmd == CMD_RANDOM || *opCmd == CMD_NORANDOM));
+  } while (!opCmd || ((multiplier > 1 && *opCmd == CMD_RESTART) ||
+                      *opCmd == CMD_HINT || *opCmd == CMD_RANDOM || *opCmd == CMD_NORANDOM));
 
   //Command cmd = *opCmd;
   return make_pair(multiplier, *opCmd);
@@ -146,18 +146,22 @@ void Game::processCommand(int multiplier, Command cmd) {
         (levelSequence_.at(3))->setRandom(false);
         (levelSequence_.at(4))->setRandom(false);
         break;
-      case CMD_RANDOM:
-        string file; cin >> file;
+      case CMD_RANDOM: {
+        string file;
+        cin >> file;
         (levelSequence_.at(3))->setRandom(true);
         (levelSequence_.at(3))->readFile(file);
         (levelSequence_.at(4))->setRandom(true);
         (levelSequence_.at(4))->readFile(file);
         break;
-      case CMD_SEQUENCE:
-        string file; cin >> file;
+      }
+      case CMD_SEQUENCE: {
+        string file;
+        cin >> file;
         fileInp.open(file);
         //TBD
         break;
+      }
       case CMD_RESTART:
         grid_->restart();
         score_ = 0;

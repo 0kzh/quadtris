@@ -6,16 +6,22 @@
 
 class Level {
 private:
-  int cur_;
   std::string filename_;
-  std::vector<BlockType> blocks_;
-  bool random_;
 public:
   virtual Block makeBlock() = 0;
+
   virtual ~Level() = default;
+
   Level();
+
   void setRandom(bool r);
+
   void readFile(std::string f);
+
+protected:
+  int cur_;
+  bool random_;
+  std::vector<BlockType> blocks_;
 };
 
 #endif
