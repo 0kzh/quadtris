@@ -221,8 +221,18 @@ void Game::processCommand(int multiplier, Command cmd) {
         if (grid_->hintBlock() != nullopt) {
           grid_->hintBlock() = nullopt;
         } else {
-          cout << grid_->hintBlock().has_value() << endl;
           grid_->setHintBlock();
+        }
+        break;
+      case CMD_I:
+      case CMD_J:
+      case CMD_L:
+      case CMD_S:
+      case CMD_Z:
+      case CMD_O:
+      case CMD_T:
+        if (grid_->fallingBlock()) {
+          grid_->fallingBlock()->setType(cmdToBlockType[cmd]);
         }
         break;
       default:

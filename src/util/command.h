@@ -1,6 +1,7 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
+#include "types.h"
 #include <string>
 #include <map>
 #include <vector>
@@ -52,6 +53,16 @@ inline std::map<std::string, Command> inputToCommand = {
     {"T",                CMD_T},
     {"restart",          CMD_RESTART},
     {"hint",             CMD_HINT},
+};
+
+inline std::map<Command, BlockType> cmdToBlockType = {
+    {CMD_I, I},
+    {CMD_J, J},
+    {CMD_L, L},
+    {CMD_S, S},
+    {CMD_Z, Z},
+    {CMD_O, O},
+    {CMD_T, T},
 };
 
 // does fuzzy matching on string input.

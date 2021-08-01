@@ -49,6 +49,7 @@ class Block {
   bool isHeavy_;
   GridShape shape_;
   BlockType type_;
+  int blockId_;
 
   int height_;
   int width_;
@@ -78,6 +79,8 @@ public:
   Point bottomLeft() const;
 
   BlockType type() const;
+
+  void setType(BlockType);
 
   std::vector<std::vector<GridItem>> shape() const;
 

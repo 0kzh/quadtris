@@ -25,6 +25,7 @@ Block::Block(BlockType type, bool isHeavy) : isHeavy_(isHeavy), type_(type) {
 
   height_ = shape_.size();
   width_ = shape_[0].size();
+  blockId_ = blockId;
 
   bottomLeft_ = Point{.x = 0, .y = 2 + height_};
 }
@@ -183,6 +184,24 @@ Point Block::bottomLeft() const {
 
 BlockType Block::type() const {
   return type_;
+}
+
+void Block::setType(BlockType type) {
+  shape_ = blockTypeToData[type];
+  type_ = type;
+  Grid::blockIdToCount.erase(Grid::blockIdToCount.find(blockId_));
+
+  for (auto &r : shape_) {
+    for (auto &block : r) {
+      if (block.val) {
+        block.blockId = blockId_;
+        Grid::blockIdToCount[blockId_]++;
+      }
+    }
+  }
+
+  height_ = shape_.size();
+  width_ = shape_[0].size();
 }
 
 GridShape Block::shape() const {
