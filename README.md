@@ -16,6 +16,7 @@
     - [x] dropping
     - [x] is heavy logic
 - [ ] game over logic
+- [ ] hints
 - [x] drawing of grid and blocks
 - [x] clearing of lines
 - [x] scoring logic
@@ -23,5 +24,6 @@
     - [x] print grid and blocks
     - [x] add keyboard events
     - [ ] add sound
+    - [ ] render hints
     - [x] add score, level, controls
     - [x] add next block
