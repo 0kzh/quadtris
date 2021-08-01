@@ -66,6 +66,8 @@ GUIView::GUIView(int width, int height) {
   /* clear the window and bring it on top of the other windows */
   XClearWindow(dis, win);
   XMapRaised(dis, win);
+
+  usleep(1000);
 }
 
 void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
@@ -75,10 +77,6 @@ void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
     drawGameOverScreen(g, level, score, hiScore);
   } else {
     drawGameScreen(g, level, score, hiScore);
-  }
-
-  while (XPending(dis)) {
-    XNextEvent(dis, &event);
   }
 }
 
@@ -145,6 +143,21 @@ void GUIView::drawGameScreen(shared_ptr<Grid> g, int level, int score, int hiSco
     }
   }
 
+  const auto &hintBlock = g->hintBlock();
+  if (hintBlock) {
+    Block b = *hintBlock;
+    for (int r = 0; r < b.height(); r++) {
+      for (int c = 0; c < b.width(); c++) {
+        int gridRow = b.bottomLeft().y - (b.height() - 1) + r;
+        int gridCol = b.bottomLeft().x + c;
+
+        if (b.shape()[r][c].val) {
+          gridToPrint[gridRow][gridCol] = GridItem{HINT};
+        }
+      }
+    }
+  }
+
   // add padding for walls
   for (auto &row : gridToPrint) {
     row.insert(row.begin(), GridItem{WALL});
@@ -206,6 +219,8 @@ Command GUIView::getNextEvent() {
           return CMD_LEVELDOWN;
         case XK_r:
           return CMD_RESTART;
+        case XK_h:
+          return CMD_HINT;
       }
   }
   return CMD_NOOP;

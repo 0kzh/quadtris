@@ -6,19 +6,22 @@
 #include <map>
 
 enum BlockType {
-  I, J, L, O, S, Z, T, WALL
+  I, J, L, O, S, Z, T, WALL, HINT
 };
 
+// the blocks that we can actually generate
+// excludes WALL and HINT types
 const int NUM_BLOCK_TYPES = 7;
 
 inline std::map<BlockType, char> blockTypeToChar{
-    {I, 'I'},
-    {J, 'J'},
-    {L, 'L'},
-    {O, 'O'},
-    {S, 'S'},
-    {Z, 'Z'},
-    {T, 'T'}
+    {I,    'I'},
+    {J,    'J'},
+    {L,    'L'},
+    {O,    'O'},
+    {S,    'S'},
+    {Z,    'Z'},
+    {T,    'T'},
+    {HINT, '?'},
 };
 
 inline std::map<char, BlockType> charToBlockType = {

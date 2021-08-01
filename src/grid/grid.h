@@ -12,6 +12,7 @@ class Grid {
   int width_;
   std::optional<Block> fallingBlock_;
   std::optional<Block> nextBlock_;
+  std::optional<Block> hintBlock_;
 
   GridShape grid_;
 
@@ -31,6 +32,8 @@ public:
 
   std::optional<Block> &nextBlock();
 
+  std::optional<Block> &hintBlock();
+
   void setNextBlocks(const std::optional<Block> &);
 
   // game is over if the fallingBlock collides with the grid
@@ -38,10 +41,27 @@ public:
 
   void restart();
 
-  void initializeGrid();
-
   // clears lines at bottom of grid. returns number of lines cleared.
   int clearLines();
+
+  void setHintBlock();
+
+private:
+  void initializeGrid();
+
+  double gridScore() const;
+
+  int numHoles() const;
+
+  int aggregateHeight() const;
+
+  int completeLines() const;
+
+  int bumpiness() const;
+
+  int colHeight(int col) const;
+
+  static int numIslands(std::vector<GridItem> &r);
 };
 
 #endif

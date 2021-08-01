@@ -52,11 +52,10 @@ class Block {
 
   int height_;
   int width_;
-  int generatedLvl_;
   Point bottomLeft_;
 
 public:
-  Block(BlockType type, bool isHeavy, int lvl);
+  Block(BlockType type, bool isHeavy);
 
   // moves the block and returns a bool indicating if we should remove the block;
   bool move(Direction d, GridShape &g);
@@ -75,8 +74,6 @@ public:
   int height() const;
 
   int width() const;
-
-  int genLevel() const;
 
   Point bottomLeft() const;
 

@@ -3,5 +3,5 @@
 LevelTwo::LevelTwo() {}
 
 Block LevelTwo::makeBlock() {
-  return Block{static_cast<BlockType>(rand() % NUM_BLOCK_TYPES - 1), false, 2};
+  return Block{static_cast<BlockType>(rand() % NUM_BLOCK_TYPES - 1), false};
 }

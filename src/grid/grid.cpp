@@ -53,6 +53,10 @@ std::optional<Block> &Grid::nextBlock() {
   return nextBlock_;
 }
 
+std::optional<Block> &Grid::hintBlock() {
+  return hintBlock_;
+}
+
 void Grid::setNextBlocks(const optional<Block> &b) {
   fallingBlock_ = nextBlock_;
   nextBlock_ = b;
@@ -96,6 +100,11 @@ int Grid::clearLines() {
     return 0;
   }
 
+  // might screw up hint so recalculate it
+  if (hintBlock_) {
+    setHintBlock();
+  }
+
   return (int) pow((Game::curLevelIdx_ + 1) + linesCleared, 2);
 }
 
@@ -116,4 +125,103 @@ bool Grid::isGameOver() const {
     }
   }
   return false;
+}
+
+// from https://codemyroad.wordpress.com/2013/04/14/tetris-ai-the-near-perfect-player/
+double Grid::gridScore() const {
+  double heightWeight = -0.510066;
+  double linesWeight = 0.760666;
+  double holesWeight = -0.35663;
+  double bumpinessWeight = -0.184483;
+
+  return heightWeight * aggregateHeight() + linesWeight * completeLines() + holesWeight * numHoles() +
+         bumpinessWeight * bumpiness();
+}
+
+int Grid::colHeight(int col) const {
+  int row = 0;
+  for (; row < height_ && !grid_[row][col].val; row++);
+  return height_ - row;
+}
+
+int Grid::aggregateHeight() const {
+  int total = 0;
+  for (int c = 0; c < width_; c++) {
+    total += colHeight(c);
+  }
+  return total;
+}
+
+int Grid::completeLines() const {
+  int total = 0;
+  for (auto &row : grid_) {
+    bool isFilled = std::all_of(row.begin(), row.end(), [](GridItem item) { return !!item.val; });
+    if (isFilled) {
+      total++;
+    }
+  }
+  return total;
+}
+
+int Grid::bumpiness() const {
+  int total = 0;
+  for (int c = 0; c < width_ - 1; c++) {
+    total += abs(colHeight(c) - colHeight(c + 1));
+  }
+  return total;
+}
+
+int Grid::numHoles() const {
+  int holes = 0;
+  for (int col = 0; col < width_; col++) {
+    bool foundBlock = false;
+    for (int row = 0; row < height_; row++) {
+      if (grid_[row][col].val) {
+        foundBlock = true;
+      } else if (foundBlock) {
+        holes++;
+      }
+    }
+  }
+  return holes;
+}
+
+void Grid::setHintBlock() {
+  if (!fallingBlock_) {
+    return;
+  }
+
+  Block origHint = Block{fallingBlock_->type(), false};
+  Block curHint = origHint;
+  pair<double, Block> bestHint = make_pair(INT_MIN, origHint); // deep copy
+  GridShape original = grid_; // deep copy
+
+  // go through all positions and rotations
+  for (int x = 0; x < width_; x++) {
+    for (int i = 0; i < 4; i++) {
+      curHint = origHint;
+      // move to x position
+      for (int _ = 0; _ < x; _++) {
+        curHint.move(RIGHT, grid_);
+      }
+
+      // rotate to orientation
+      for (int _ = 0; _ < i; _++) {
+        curHint.rotate(CW, grid_);
+      }
+
+      curHint.drop(grid_);
+
+      // lower score is better
+      double score = gridScore();
+      if (score > bestHint.first) {
+        bestHint.first = score;
+        bestHint.second = curHint;
+      }
+
+      grid_ = original;
+    }
+  }
+
+  hintBlock_ = bestHint.second;
 }

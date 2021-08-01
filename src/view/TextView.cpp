@@ -26,6 +26,23 @@ void TextView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
       }
     }
   }
+
+  // add hintBlock
+  const auto &hintBlock = g->hintBlock();
+  if (hintBlock && !g->isGameOver()) {
+    Block b = *hintBlock;
+    for (int r = 0; r < b.height(); r++) {
+      for (int c = 0; c < b.width(); c++) {
+        int gridRow = b.bottomLeft().y - (b.height() - 1) + r;
+        int gridCol = b.bottomLeft().x + c;
+
+        if (b.shape()[r][c].val) {
+          gridToPrint[gridRow][gridCol] = GridItem{HINT};
+        }
+      }
+    }
+  }
+
   //four spaces
   string highScoreStr = "    Hi-Score: " + to_string(hiScore);
   string levelStr = "    Level: ";

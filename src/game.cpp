@@ -65,6 +65,8 @@ void Game::gameLoop() {
     }
   }
 
+  grid_->hintBlock() = nullopt;
+
   Command c;
   if (gameOver) {
     if (hasTextView) {
@@ -125,7 +127,7 @@ pair<int, Command> Game::readCommand() {
     opCmd = matchCommand(input);
 
   } while (!opCmd || ((multiplier > 1 && *opCmd == CMD_RESTART) ||
-                      *opCmd == CMD_HINT || *opCmd == CMD_RANDOM || *opCmd == CMD_NORANDOM));
+                      *opCmd == CMD_RANDOM || *opCmd == CMD_NORANDOM));
 
   //Command cmd = *opCmd;
   return make_pair(multiplier, *opCmd);
@@ -213,6 +215,9 @@ void Game::processCommand(int multiplier, Command cmd) {
       case CMD_RESTART:
         reset();
         multiplier = 0;
+        break;
+      case CMD_HINT:
+        grid_->setHintBlock();
         break;
       default:
         break;

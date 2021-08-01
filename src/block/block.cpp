@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Block::Block(BlockType type, bool isHeavy, int lvl) : generatedLvl_(lvl), isHeavy_(isHeavy), type_(type) {
+Block::Block(BlockType type, bool isHeavy) : isHeavy_(isHeavy), type_(type) {
   shape_ = blockTypeToData[type];
 
   // generate unique ID and assign to each block
@@ -175,10 +175,6 @@ int Block::height() const {
 
 int Block::width() const {
   return width_;
-}
-
-int Block::genLevel() const {
-  return generatedLvl_;
 }
 
 Point Block::bottomLeft() const {
