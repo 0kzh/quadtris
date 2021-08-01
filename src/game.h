@@ -52,6 +52,8 @@ public:
   //   ];
   // }
 private:
+  void initializeLevels();
+
   void gameLoop();
 
   static std::pair<int, Command> readCommand();

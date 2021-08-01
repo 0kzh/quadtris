@@ -14,6 +14,10 @@ Grid::Grid(int height, int width) {
   height_ = height;
   width_ = width;
 
+  initializeGrid();
+}
+
+void Grid::initializeGrid() {
   // initialize the grid with empty blocks
   grid_.clear();
   for (int row = 0; row < height_; row++) {
@@ -33,9 +37,12 @@ int Grid::width() const { return width_; }
 GridShape &Grid::grid() { return grid_; }
 
 void Grid::restart() {
-  grid_.clear();
+  initializeGrid();
   fallingBlock_ = nullopt;
   nextBlock_ = nullopt;
+
+  blockIdToCount.clear();
+  blockIdToCreatedAtLvl.clear();
 }
 
 std::optional<Block> &Grid::fallingBlock() {

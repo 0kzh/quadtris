@@ -18,7 +18,6 @@ class Grid {
 public:
   static std::map<int, int> blockIdToCount;
   static std::map<int, int> blockIdToCreatedAtLvl;
-  static std::map<int, int> blockIdToScore;
 
   Grid(int height, int width);
 
@@ -29,10 +28,14 @@ public:
   GridShape &grid();
 
   std::optional<Block> &fallingBlock();
+
   std::optional<Block> &nextBlock();
 
   void setNextBlocks(const std::optional<Block> &);
+
   void restart();
+
+  void initializeGrid();
 
   // clears lines at bottom of grid. returns number of lines cleared.
   int clearLines();

@@ -15,10 +15,13 @@ using namespace std;
 Game::Game(bool textOnly, int seed, string scriptFile)
     : textOnly_(textOnly), scriptFile_(scriptFile),
       score_(0), hiScore_(0), readFromFile_(false) {
-//  views_.push_back(make_shared<TextView>(TextView()));
-  views_.push_back(make_shared<GUIView>(GUIView(650, 608)));
+  views_.push_back(make_shared<TextView>(TextView()));
+//  views_.push_back(make_shared<GUIView>(GUIView(650, 608)));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
+  initializeLevels();
+}
 
+void Game::initializeLevels() {
   levelSequence_ = {make_shared<LevelZero>(LevelZero(scriptFile_)),
                     make_shared<LevelOne>(LevelOne()),
                     make_shared<LevelTwo>(LevelTwo()),
@@ -102,6 +105,13 @@ void Game::moveDown() {
   }
 }
 
+void Game::reset() {
+  curLevelIdx_ = 0;
+  grid_->restart();
+  score_ = 0;
+  initializeLevels();
+}
+
 void Game::processCommand(int multiplier, Command cmd) {
   for (int i = 0; i < multiplier; i++) {
     switch (cmd) {
@@ -163,8 +173,7 @@ void Game::processCommand(int multiplier, Command cmd) {
         break;
       }
       case CMD_RESTART:
-        grid_->restart();
-        score_ = 0;
+        reset();
         multiplier = 0;
         break;
       default:
