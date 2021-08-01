@@ -181,10 +181,14 @@ void Game::processCommand(int multiplier, Command cmd) {
         }
         break;
       case CMD_LEVELUP:
-        curLevelIdx_++;
+        if (curLevelIdx_ + 1 < levelSequence_.size()) {
+          curLevelIdx_++;
+        }
         break;
       case CMD_LEVELDOWN:
-        curLevelIdx_--;
+        if (curLevelIdx_ - 1 >= 0) {
+          curLevelIdx_--;
+        }
         break;
       case CMD_NORANDOM:
         (levelSequence_.at(3))->setRandom(false);
