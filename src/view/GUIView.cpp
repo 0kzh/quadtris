@@ -83,11 +83,12 @@ void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
 void GUIView::drawGameScreen(shared_ptr<Grid> g, int level, int score, int hiScore) {
   Color white = {255, 255, 255};
 
-  drawText("SCORE: " + to_string(score), 448, 48, white);
-  drawText("HI-SCORE: " + to_string(hiScore), 448, 80, white);
+  drawText("LEVEL: " + to_string(level), 448, 46, white);
+  drawText("SCORE: " + to_string(score), 448, 78, white);
+  drawText("HI-SCORE: " + to_string(hiScore), 448, 110, white);
 
-  drawText("NEXT", 448, 128, white);
-  drawRect(448, 145, 192, 96, white);
+  drawText("NEXT", 448, 158, white);
+  drawRect(448, 175, 192, 96, white);
 
   const auto &nextBlock = g->nextBlock();
   if (nextBlock) {
@@ -102,27 +103,28 @@ void GUIView::drawGameScreen(shared_ptr<Grid> g, int level, int score, int hiSco
           int height = (int) nb.shape().size() * GRID_SIZE;
           int totalHeight = 3 * GRID_SIZE;
           int yStart = (totalHeight - height) / 2;
-          drawCell(448 + xStart + c * GRID_SIZE, 145 + yStart + r * GRID_SIZE, nb.type());
+          drawCell(448 + xStart + c * GRID_SIZE, 175 + yStart + r * GRID_SIZE, nb.type());
         }
       }
     }
   }
 
-  drawText("CONTROLS", 448, 350, white);
+  drawText("CONTROLS", 448, 320, white);
 
   Color gray = {196, 196, 196};
   int controlsWidth = 15;
-  drawText(Helper::generateCenterJustifiedString("Left", "- ", controlsWidth), 448, 400, gray);
-  drawText(Helper::generateCenterJustifiedString("", "<", controlsWidth), 435, 400, gray);
-  drawText(Helper::generateCenterJustifiedString("Right", "- ", controlsWidth), 448, 430, gray);
-  drawText(Helper::generateCenterJustifiedString("", ">", controlsWidth), 440, 430, gray);
-  drawText(Helper::generateCenterJustifiedString("Down", "| ", controlsWidth), 448, 460, gray);
-  drawText(Helper::generateCenterJustifiedString("", "v ", controlsWidth), 448, 460, gray);
-  drawText(Helper::generateCenterJustifiedString("", "^ ", controlsWidth), 448, 490, gray);
-  drawText(Helper::generateCenterJustifiedString("Rotate", "| ", controlsWidth), 448, 490, gray);
-  drawText(Helper::generateCenterJustifiedString("Drop", "<SPACE>", controlsWidth), 448, 520, gray);
-  drawText(Helper::generateCenterJustifiedString("Level Up", "+ ", controlsWidth), 448, 550, gray);
-  drawText(Helper::generateCenterJustifiedString("Level Down", "- ", controlsWidth), 448, 580, gray);
+  drawText(Helper::generateCenterJustifiedString("Left", "- ", controlsWidth), 448, 370, gray);
+  drawText(Helper::generateCenterJustifiedString("", "<", controlsWidth), 435, 370, gray);
+  drawText(Helper::generateCenterJustifiedString("Right", "- ", controlsWidth), 448, 400, gray);
+  drawText(Helper::generateCenterJustifiedString("", ">", controlsWidth), 440, 400, gray);
+  drawText(Helper::generateCenterJustifiedString("Down", "| ", controlsWidth), 448, 430, gray);
+  drawText(Helper::generateCenterJustifiedString("", "v ", controlsWidth), 448, 430, gray);
+  drawText(Helper::generateCenterJustifiedString("", "^ ", controlsWidth), 448, 460, gray);
+  drawText(Helper::generateCenterJustifiedString("Rotate", "| ", controlsWidth), 448, 460, gray);
+  drawText(Helper::generateCenterJustifiedString("Drop", "<SPACE>", controlsWidth), 448, 490, gray);
+  drawText(Helper::generateCenterJustifiedString("Level Up", "<e>", controlsWidth), 448, 520, gray);
+  drawText(Helper::generateCenterJustifiedString("Level Down", "<q>", controlsWidth), 448, 550, gray);
+  drawText(Helper::generateCenterJustifiedString("Hint", "<h>", controlsWidth), 448, 580, gray);
 
   // deep copy grid
   GridShape gridToPrint = g->grid();
@@ -213,9 +215,9 @@ Command GUIView::getNextEvent() {
           return CMD_CLOCKWISE;
         case XK_space:
           return CMD_DROP;
-        case XK_plus:
+        case XK_e:
           return CMD_LEVELUP;
-        case XK_minus:
+        case XK_q:
           return CMD_LEVELDOWN;
         case XK_r:
           return CMD_RESTART;
