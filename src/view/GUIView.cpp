@@ -1,4 +1,5 @@
 #include "GUIView.h"
+#include "../util/helper.h"
 #include <memory>
 
 using namespace std;
@@ -27,7 +28,7 @@ GUIView::GUIView(int width, int height) {
      at the top of the window and the name of the minimized window
      respectively.
   */
-  XSetStandardProperties(dis, win, "Quadtris", "HI!", None, NULL, 0, NULL);
+  XSetStandardProperties(dis, win, "Quadtris", "Quadtris", None, NULL, 0, NULL);
 
   /* this routine determines which types of input are allowed in
      the input.  see the appropriate section for details...
@@ -67,6 +68,48 @@ GUIView::GUIView(int width, int height) {
 void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
   redraw();
 
+  Color white = {255, 255, 255};
+  drawText("SCORE: " + to_string(score), 448, 48, white);
+  drawText("HI-SCORE: " + to_string(hiScore), 448, 80, white);
+
+  drawText("NEXT", 448, 128, white);
+  drawRect(448, 145, 192, 96, white);
+
+  const auto &nextBlock = g->nextBlock();
+  if (nextBlock) {
+    Block nb = *nextBlock;
+    for (int r = 0; r < nb.height(); r++) {
+      for (int c = 0; c < nb.width(); c++) {
+        if (nb.shape()[r][c].val) {
+          int width = (int) nb.shape()[0].size() * GRID_SIZE;
+          int totalWidth = 6 * GRID_SIZE;
+          int xStart = (totalWidth - width) / 2;
+
+          int height = (int) nb.shape().size() * GRID_SIZE;
+          int totalHeight = 3 * GRID_SIZE;
+          int yStart = (totalHeight - height) / 2;
+          drawCell(448 + xStart + c * GRID_SIZE, 145 + yStart + r * GRID_SIZE, nb.type());
+        }
+      }
+    }
+  }
+
+  drawText("CONTROLS", 448, 350, white);
+
+  Color gray = {196, 196, 196};
+  int controlsWidth = 15;
+  drawText(Helper::generateCenterJustifiedString("Left", "- ", controlsWidth), 448, 400, gray);
+  drawText(Helper::generateCenterJustifiedString("", "<", controlsWidth), 435, 400, gray);
+  drawText(Helper::generateCenterJustifiedString("Right", "- ", controlsWidth), 448, 430, gray);
+  drawText(Helper::generateCenterJustifiedString("", ">", controlsWidth), 440, 430, gray);
+  drawText(Helper::generateCenterJustifiedString("Down", "| ", controlsWidth), 448, 460, gray);
+  drawText(Helper::generateCenterJustifiedString("", "v ", controlsWidth), 448, 460, gray);
+  drawText(Helper::generateCenterJustifiedString("", "^ ", controlsWidth), 448, 490, gray);
+  drawText(Helper::generateCenterJustifiedString("Rotate", "| ", controlsWidth), 448, 490, gray);
+  drawText(Helper::generateCenterJustifiedString("Drop", "<SPACE>", controlsWidth), 448, 520, gray);
+  drawText(Helper::generateCenterJustifiedString("Level Up", "+ ", controlsWidth), 448, 550, gray);
+  drawText(Helper::generateCenterJustifiedString("Level Down", "- ", controlsWidth), 448, 580, gray);
+
   // deep copy grid
   GridShape gridToPrint = g->grid();
 
@@ -103,7 +146,7 @@ void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
       GridItem block = gridToPrint[row][col];
 
       if (block.val) {
-        drawCell(row, col, *block.val);
+        drawCellInGrid(row, col, *block.val);
       }
     }
   }
@@ -133,23 +176,31 @@ Command GUIView::getNextEvent() {
   return CMD_NOOP;
 }
 
-void GUIView::drawRect(int x, int y, int width, int height, Color color) {
+void GUIView::fillRect(int x, int y, int width, int height, Color color) {
   XSetForeground(dis, gc, RGB(color.r, color.g, color.b));
   XFillRectangle(dis, win, gc, x, y, width, height);
 }
 
-void GUIView::drawCell(int row, int col, BlockType block) {
+void GUIView::drawRect(int x, int y, int width, int height, Color color) {
+  XSetForeground(dis, gc, RGB(color.r, color.g, color.b));
+  XDrawRectangle(dis, win, gc, x, y, width, height);
+}
+
+void GUIView::drawCell(int x, int y, BlockType block) {
   Color base = blockColors[block].base;
   Color highlight = blockColors[block].highlight;
   Color shadow = blockColors[block].shadow;
-
   int edge = GRID_SIZE / 8;
+
+  fillRect(x, y, GRID_SIZE, GRID_SIZE, shadow);
+  fillRect(x + edge, y, GRID_SIZE - edge, GRID_SIZE - edge, highlight);
+  fillRect(x + edge, y + edge, GRID_SIZE - edge * 2, GRID_SIZE - edge * 2, base);
+}
+
+void GUIView::drawCellInGrid(int row, int col, BlockType block) {
   int x = col * GRID_SIZE;
   int y = row * GRID_SIZE;
-
-  drawRect(x, y, GRID_SIZE, GRID_SIZE, shadow);
-  drawRect(x + edge, y, GRID_SIZE - edge, GRID_SIZE - edge, highlight);
-  drawRect(x + edge, y + edge, GRID_SIZE - edge * 2, GRID_SIZE - edge * 2, base);
+  drawCell(x, y, block);
 }
 
 unsigned long GUIView::RGB(int r, int g, int b) {
@@ -158,4 +209,12 @@ unsigned long GUIView::RGB(int r, int g, int b) {
 
 void GUIView::redraw() {
   XClearWindow(dis, win);
+}
+
+void GUIView::drawText(std::string text, int x, int y, Color color) {
+  XFontStruct *font = XLoadQueryFont(dis, "10x20");
+  XTextItem textToDraw = {const_cast<char *>(text.c_str()), static_cast<int>(text.length()), 0, font->fid};
+
+  XSetForeground(dis, gc, RGB(color.r, color.g, color.b));
+  XDrawText(dis, win, gc, x, y, &textToDraw, 1);
 }

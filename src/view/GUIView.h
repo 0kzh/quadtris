@@ -28,9 +28,15 @@ public:
   Command getNextEvent();
 
 private:
+  void fillRect(int x, int y, int width, int height, Color color);
+
   void drawRect(int x, int y, int width, int height, Color color);
 
-  void drawCell(int row, int col, BlockType b);
+  void drawCell(int x, int y, BlockType b);
+
+  void drawCellInGrid(int row, int col, BlockType b);
+
+  void drawText(std::string text, int x, int y, Color color);
 
   void redraw();
 

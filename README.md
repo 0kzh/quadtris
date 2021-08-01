@@ -23,5 +23,5 @@
     - [x] print grid and blocks
     - [x] add keyboard events
     - [ ] add sound
-    - [ ] add score, level, controls
-    - [ ] add next block
+    - [x] add score, level, controls
+    - [x] add next block

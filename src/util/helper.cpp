@@ -1,4 +1,5 @@
 #include "helper.h"
+#include <cassert>
 
 using namespace std;
 
@@ -20,6 +21,13 @@ pair<int, string> Helper::splitMultipliedInput(const string &input) {
 }
 
 int Helper::generateUniqueId() {
-  static std::atomic<std::uint32_t> uid{0};
+  static atomic<uint32_t> uid{0};
   return ++uid;
+}
+
+string Helper::generateCenterJustifiedString(string a, string b, int width) {
+  int remWidth = width - a.length() - b.length();
+  assert(remWidth >= 0);
+
+  return a + string(remWidth, ' ') + b;
 }
