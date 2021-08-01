@@ -53,7 +53,7 @@ void Game::gameLoop() {
   bool hasTextView = false;
 
   for (auto &v : views_) {
-    v->draw(grid_, curLevelIdx_ + 1, score_, hiScore_);
+    v->draw(grid_, curLevelIdx_, score_, hiScore_);
     if (dynamic_pointer_cast<GUIView>(v) != nullptr) {
       guiView = dynamic_pointer_cast<GUIView>(v);
     }

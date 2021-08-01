@@ -21,7 +21,7 @@ Block::Block(BlockType type, bool isHeavy) : isHeavy_(isHeavy), type_(type) {
       }
     }
   }
-  Grid::blockIdToCreatedAtLvl[blockId] = Game::curLevelIdx_ + 1;
+  Grid::blockIdToCreatedAtLvl[blockId] = Game::curLevelIdx_;
 
   height_ = shape_.size();
   width_ = shape_[0].size();

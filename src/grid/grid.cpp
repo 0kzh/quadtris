@@ -105,7 +105,7 @@ int Grid::clearLines() {
     setHintBlock();
   }
 
-  return (int) pow((Game::curLevelIdx_ + 1) + linesCleared, 2);
+  return (int) pow(Game::curLevelIdx_ + linesCleared, 2);
 }
 
 bool Grid::isGameOver() const {
