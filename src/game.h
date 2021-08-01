@@ -23,7 +23,6 @@ class Game {
 
   bool textOnly_;
   bool readFromFile_;
-  bool gameOver_;
   string scriptFile_;
 
   vector<shared_ptr<Level>> levelSequence_;

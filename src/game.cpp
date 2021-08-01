@@ -15,7 +15,6 @@ using namespace std;
 Game::Game(bool textOnly, int seed, string scriptFile)
     : textOnly_(textOnly), scriptFile_(scriptFile),
       score_(0), hiScore_(0), readFromFile_(false) {
-  gameOver_ = false;
   views_.push_back(make_shared<TextView>(TextView()));
 //  views_.push_back(make_shared<GUIView>(GUIView(650, 608)));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
@@ -44,9 +43,7 @@ bool Game::addBlockIfNone(const shared_ptr<Grid> &g) {
     g->setNextBlocks(curLevel->makeBlock());
   }
 
-  gameOver_ = g->isGameOver();
-
-  return gameOver_;
+  return g->isGameOver();
 }
 
 void Game::gameLoop() {
@@ -146,12 +143,12 @@ void Game::moveDown() {
 void Game::reset() {
   curLevelIdx_ = 0;
   score_ = 0;
-  gameOver_ = false;
   grid_->restart();
   initializeLevels();
 }
 
 void Game::processCommand(int multiplier, Command cmd) {
+  cout << multiplier << "," << cmd << endl;
   for (int i = 0; i < multiplier; i++) {
     switch (cmd) {
       case CMD_LEFT:
@@ -183,6 +180,7 @@ void Game::processCommand(int multiplier, Command cmd) {
         if (grid_->fallingBlock()) {
           grid_->fallingBlock()->drop(grid_->grid());
           grid_->fallingBlock() = nullopt;
+          addBlockIfNone(grid_);
         }
         break;
       case CMD_LEVELUP:
@@ -220,7 +218,12 @@ void Game::processCommand(int multiplier, Command cmd) {
         multiplier = 0;
         break;
       case CMD_HINT:
-        grid_->setHintBlock();
+        if (grid_->hintBlock() != nullopt) {
+          grid_->hintBlock() = nullopt;
+        } else {
+          cout << grid_->hintBlock().has_value() << endl;
+          grid_->setHintBlock();
+        }
         break;
       default:
         break;
