@@ -13,7 +13,7 @@ void TextView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
 
   // add the falling block
   const auto &fallingBlock = g->fallingBlock();
-  if (fallingBlock) {
+  if (fallingBlock && !g->isGameOver()) {
     Block b = *fallingBlock;
     for (int r = 0; r < b.height(); r++) {
       for (int c = 0; c < b.width(); c++) {
@@ -50,11 +50,11 @@ void TextView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
   cout << nextStr << endl;
 
   const auto &nextBlock = g->nextBlock();
-  if(nextBlock) {
+  if (nextBlock) {
     Block nb = *nextBlock;
-    for(int nr = 0; nr < nb.height(); nr++) {
+    for (int nr = 0; nr < nb.height(); nr++) {
       cout << "    ";
-      for(int nc = 0; nc < nb.width(); nc++) {
+      for (int nc = 0; nc < nb.width(); nc++) {
         cout << nb.shape()[nr][nc];
       }
       cout << endl;

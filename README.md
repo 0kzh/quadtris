@@ -15,7 +15,7 @@
     - [x] rotation
     - [x] dropping
     - [x] is heavy logic
-- [ ] game over logic
+- [x] game over logic
 - [ ] hints
 - [x] drawing of grid and blocks
 - [x] clearing of lines
