@@ -16,8 +16,8 @@ Game::Game(bool textOnly, int seed, string scriptFile)
     : textOnly_(textOnly), scriptFile_(scriptFile),
       score_(0), hiScore_(0), readFromFile_(false) {
   gameOver_ = false;
-//  views_.push_back(make_shared<TextView>(TextView()));
-  views_.push_back(make_shared<GUIView>(GUIView(650, 608)));
+  views_.push_back(make_shared<TextView>(TextView()));
+//  views_.push_back(make_shared<GUIView>(GUIView(650, 608)));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
   initializeLevels();
 }
@@ -121,6 +121,9 @@ pair<int, Command> Game::readCommand() {
   do {
 //    cin >> input;
     getline(cin, input);
+    if (input.empty()) {
+      exit(1); // EOF ends the game
+    }
     std::pair<int, string> multipliedInput = Helper::splitMultipliedInput(input);
     multiplier = multipliedInput.first;
     input = multipliedInput.second;
