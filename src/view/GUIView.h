@@ -14,6 +14,8 @@
 class GUIView : public View {
   Display *dis;
   int screen;
+  int width_;
+  int height_;
   Window win;
   GC gc;
   XSizeHints *size_hints;
@@ -28,6 +30,10 @@ public:
   Command getNextEvent();
 
 private:
+  void drawGameScreen(std::shared_ptr<Grid> g, int level, int score, int highScore);
+
+  void drawGameOverScreen(std::shared_ptr<Grid> g, int level, int score, int highScore);
+
   void fillRect(int x, int y, int width, int height, Color color);
 
   void drawRect(int x, int y, int width, int height, Color color);

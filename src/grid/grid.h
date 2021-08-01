@@ -33,6 +33,9 @@ public:
 
   void setNextBlocks(const std::optional<Block> &);
 
+  // game is over if the fallingBlock collides with the grid
+  bool isGameOver() const;
+
   void restart();
 
   void initializeGrid();

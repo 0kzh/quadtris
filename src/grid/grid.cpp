@@ -98,3 +98,22 @@ int Grid::clearLines() {
 
   return (int) pow((Game::curLevelIdx_ + 1) + linesCleared, 2);
 }
+
+bool Grid::isGameOver() const {
+  if (fallingBlock_) {
+    Block b = *fallingBlock_;
+    for (int r = 0; r < b.height(); r++) {
+      for (int c = 0; c < b.width(); c++) {
+        int gridRow = b.bottomLeft().y - (b.height() - 1) + r;
+        int gridCol = b.bottomLeft().x + c;
+
+        if (b.shape()[r][c].val) {
+          if (grid_[gridRow][gridCol].val) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+  return false;
+}

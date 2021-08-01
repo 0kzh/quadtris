@@ -15,8 +15,9 @@ using namespace std;
 Game::Game(bool textOnly, int seed, string scriptFile)
     : textOnly_(textOnly), scriptFile_(scriptFile),
       score_(0), hiScore_(0), readFromFile_(false) {
-  views_.push_back(make_shared<TextView>(TextView()));
-//  views_.push_back(make_shared<GUIView>(GUIView(650, 608)));
+  gameOver_ = false;
+//  views_.push_back(make_shared<TextView>(TextView()));
+  views_.push_back(make_shared<GUIView>(GUIView(650, 608)));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
   initializeLevels();
 }
@@ -37,15 +38,20 @@ void Game::start() {
   }
 }
 
-void Game::addBlockIfNone(const shared_ptr<Grid> &g) {
+bool Game::addBlockIfNone(const shared_ptr<Grid> &g) {
   shared_ptr<Level> curLevel = levelSequence_.at(curLevelIdx_);
   while (!g->fallingBlock()) {
     g->setNextBlocks(curLevel->makeBlock());
   }
+
+  gameOver_ = g->isGameOver();
+
+  return gameOver_;
 }
 
 void Game::gameLoop() {
-  addBlockIfNone(grid_);
+  bool gameOver = addBlockIfNone(grid_);
+
   shared_ptr<GUIView> guiView;
   bool hasTextView = false;
 
@@ -60,6 +66,33 @@ void Game::gameLoop() {
   }
 
   Command c;
+  if (gameOver) {
+    if (hasTextView) {
+      cout << "Game Over! Enter any key to restart or 'q' to quit." << endl;
+      string input;
+      getline(cin, input);
+
+      cout << input;
+
+      if (input == "q") {
+        c = CMD_QUIT;
+      } else {
+        c = CMD_RESTART;
+      }
+    } else {
+      do {
+        c = guiView->getNextEvent();
+      } while (c != CMD_QUIT && c != CMD_RESTART);
+    }
+
+    if (c == CMD_QUIT) {
+      exit(0);
+    } else {
+      reset();
+      return;
+    }
+  }
+
   int multiplier;
   if (hasTextView) {
     pair<int, Command> res = readCommand();
@@ -84,8 +117,8 @@ pair<int, Command> Game::readCommand() {
   std::optional<Command> opCmd;
 
   do {
-    cin >> input;
-    //getline(cin, input);
+//    cin >> input;
+    getline(cin, input);
     std::pair<int, string> multipliedInput = Helper::splitMultipliedInput(input);
     multiplier = multipliedInput.first;
     input = multipliedInput.second;
@@ -107,8 +140,9 @@ void Game::moveDown() {
 
 void Game::reset() {
   curLevelIdx_ = 0;
-  grid_->restart();
   score_ = 0;
+  gameOver_ = false;
+  grid_->restart();
   initializeLevels();
 }
 

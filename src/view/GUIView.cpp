@@ -58,6 +58,9 @@ GUIView::GUIView(int width, int height) {
   size_hints->max_width = width;
   size_hints->max_height = height;
 
+  width_ = width;
+  height_ = height;
+
   XSetWMNormalHints(dis, win, size_hints);
 
   /* clear the window and bring it on top of the other windows */
@@ -68,7 +71,20 @@ GUIView::GUIView(int width, int height) {
 void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
   redraw();
 
+  if (g->isGameOver()) {
+    drawGameOverScreen(g, level, score, hiScore);
+  } else {
+    drawGameScreen(g, level, score, hiScore);
+  }
+
+  while (XPending(dis)) {
+    XNextEvent(dis, &event);
+  }
+}
+
+void GUIView::drawGameScreen(shared_ptr<Grid> g, int level, int score, int hiScore) {
   Color white = {255, 255, 255};
+
   drawText("SCORE: " + to_string(score), 448, 48, white);
   drawText("HI-SCORE: " + to_string(hiScore), 448, 80, white);
 
@@ -150,10 +166,23 @@ void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
       }
     }
   }
+}
 
-  while (XPending(dis)) {
-    XNextEvent(dis, &event);
-  }
+void GUIView::drawGameOverScreen(std::shared_ptr<Grid> g, int level, int score, int highScore) {
+  Color white = {255, 255, 255};
+  Color gray = {196, 196, 196};
+
+  string gameOverText = "GAME OVER!";
+  string scoreText = "SCORE: " + to_string(score);
+  string restartText = "press <r> to restart";
+
+  auto textWidth = [](const string &text) {
+    return (int) text.length() * 11; // each char is 11px in width
+  };
+
+  drawText(gameOverText, (width_ - textWidth(gameOverText)) / 2, 270, white);
+  drawText(scoreText, (width_ - textWidth(scoreText)) / 2, 290, gray);
+  drawText(restartText, (width_ - textWidth(restartText)) / 2, 340, gray);
 }
 
 Command GUIView::getNextEvent() {
@@ -175,6 +204,8 @@ Command GUIView::getNextEvent() {
           return CMD_LEVELUP;
         case XK_minus:
           return CMD_LEVELDOWN;
+        case XK_r:
+          return CMD_RESTART;
       }
   }
   return CMD_NOOP;

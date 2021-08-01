@@ -23,6 +23,7 @@ class Game {
 
   bool textOnly_;
   bool readFromFile_;
+  bool gameOver_;
   string scriptFile_;
 
   vector<shared_ptr<Level>> levelSequence_;
@@ -60,7 +61,7 @@ private:
 
   void processCommand(int multiplier, Command c);
 
-  void addBlockIfNone(const std::shared_ptr<Grid> &g);
+  bool addBlockIfNone(const std::shared_ptr<Grid> &g);
 
   void moveDown();
 };
