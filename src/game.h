@@ -22,14 +22,14 @@ class Game {
   // BlockType[] blockSequence_;
 
   bool textOnly_;
-  bool readFromFile_;
   string scriptFile_;
 
   vector<shared_ptr<Level>> levelSequence_;
 
   const int EXTRA_ROWS = 3;
 
-  ifstream fileInp;
+  static bool readFromFile_;
+  static ifstream fileInp_;
 
 public:
   static int curLevelIdx_;

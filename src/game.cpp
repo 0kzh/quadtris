@@ -12,10 +12,13 @@
 
 using namespace std;
 
+bool Game::readFromFile_ = false;
+ifstream Game::fileInp_;
+
 Game::Game(bool textOnly, int seed, string scriptFile)
     : textOnly_(textOnly), scriptFile_(scriptFile),
-      score_(0), hiScore_(0), readFromFile_(false) {
-//  views_.push_back(make_shared<TextView>(TextView()));
+      score_(0), hiScore_(0) {
+  views_.push_back(make_shared<TextView>(TextView()));
   views_.push_back(make_shared<GUIView>(GUIView(650, 608)));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
   initializeLevels();
@@ -116,8 +119,18 @@ pair<int, Command> Game::readCommand() {
   std::optional<Command> opCmd;
 
   do {
-//    cin >> input;
-    getline(cin, input);
+    if(readFromFile_) {
+      if(fileInp_.is_open() && !fileInp_.eof()) {
+        fileInp_ >> input;
+      } else {
+        fileInp_.close();
+        readFromFile_ = false;
+        getline(cin, input);
+      }
+    } else {
+  //  cin >> input;
+      getline(cin, input);
+    }
     if (input.empty()) {
       exit(1); // EOF ends the game
     }
@@ -208,8 +221,8 @@ void Game::processCommand(int multiplier, Command cmd) {
       case CMD_SEQUENCE: {
         string file;
         cin >> file;
-        fileInp.open(file);
-        //TBD
+        fileInp_.open(file);
+        readFromFile_ = true;
         break;
       }
       case CMD_RESTART:
