@@ -15,7 +15,7 @@ using namespace std;
 Game::Game(bool textOnly, int seed, string scriptFile)
     : textOnly_(textOnly), scriptFile_(scriptFile),
       score_(0), hiScore_(0), readFromFile_(false) {
-//  views_.push_back(make_shared<TextView>(TextView()));
+  views_.push_back(make_shared<TextView>(TextView()));
   views_.push_back(make_shared<GUIView>(GUIView(650, 608)));
   grid_ = make_shared<Grid>(Grid(15 + EXTRA_ROWS, 11));
   initializeLevels();
