@@ -16,6 +16,7 @@ void Level::readFile(std::string f) {
     }
   }
   blklist.close();
+  blocks_.pop_back();
 }
 
 void Level::setRandom(bool r) {
