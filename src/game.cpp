@@ -214,16 +214,16 @@ void Game::processCommand(int multiplier, Command cmd) {
           curLevelIdx_--;
         }
         break;
-      case CMD_NORANDOM:
-        (levelSequence_.at(3))->setRandom(false);
-        (levelSequence_.at(4))->setRandom(false);
+      case CMD_RANDOM:
+        (levelSequence_.at(3))->setRandom(true);
+        (levelSequence_.at(4))->setRandom(true);
         break;
-      case CMD_RANDOM: {
+      case CMD_NORANDOM: {
         string file;
         cin >> file;
-        (levelSequence_.at(3))->setRandom(true);
+        (levelSequence_.at(3))->setRandom(false);
         (levelSequence_.at(3))->readFile(file);
-        (levelSequence_.at(4))->setRandom(true);
+        (levelSequence_.at(4))->setRandom(false);
         (levelSequence_.at(4))->readFile(file);
         break;
       }
