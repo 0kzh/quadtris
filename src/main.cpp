@@ -38,6 +38,10 @@ int main(int argc, char *argv[]) {
       j++;
     }
   }
+  if (startLevel < 0 || startLevel > 4) {
+    startLevel = 0;
+  }
+
 
   srand(seed);
   Game game = Game(textOnly, guiOnly, seed, scriptFile);
