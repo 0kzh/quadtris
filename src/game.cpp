@@ -116,9 +116,19 @@ void Game::gameLoop() {
 
   processCommand(multiplier, c);
 
-  score_ += grid_->clearLines();
+  int cleared = grid_->clearLines();
+  score_ += cleared;
   hiScore_ = max(hiScore_, score_);
 
+  if (cleared == 0 && curLevelIdx_ == 4 && (levelSequence_.at(4)->blocksPlaced_ -1) % 5 == 0 && levelSequence_.at(4)->blocksPlaced_ -1 > 0) {
+    grid_->fallingBlock() = Block{LFOUR, true}; 
+    levelSequence_.at(4)->blocksPlaced_ = 0; 
+    for (int i = 0; i < 5; i++) {
+        grid_->fallingBlock()->move(RIGHT, grid_->grid());
+    }
+    grid_->fallingBlock()->drop(grid_->grid());
+    grid_->fallingBlock() = nullopt; 
+  }
   addBlockIfNone(grid_);
 }
 

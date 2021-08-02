@@ -24,6 +24,7 @@ inline std::map<BlockType, ColorSet> blockColors{
     {S,    {Color{0, 240, 0},   Color{179, 252, 180}, Color{0, 216, 0}}},
     {Z,    {Color{241, 1, 1},   Color{255, 177, 178}, Color{217, 0, 2}}},
     {T,    {Color{159, 0, 240}, Color{226, 180, 252}, Color{142, 1, 217}}},
+    {LFOUR,    {Color{204, 102, 0}, Color{240, 189, 138}, Color{102, 51, 0}}},
     {WALL, {Color{79, 79, 79},  Color{200, 200, 200}, Color{26, 26, 26}}},
     {HINT, {Color{25, 25, 25},  Color{50, 50, 50},    Color{10, 10, 10}}}
 };

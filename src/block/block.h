@@ -15,6 +15,7 @@ inline GridItem O_ = GridItem{O};
 inline GridItem S_ = GridItem{S};
 inline GridItem Z_ = GridItem{Z};
 inline GridItem T_ = GridItem{T};
+inline GridItem LFOUR_ = GridItem{LFOUR};
 
 inline std::map<BlockType, GridShape> blockTypeToData = {
     {I, GridShape{{I_, I_, I_, I_}}},
@@ -37,6 +38,9 @@ inline std::map<BlockType, GridShape> blockTypeToData = {
     {T, GridShape{
         {T_, T_, T_},
         {__, T_, __}
+    }},
+    {LFOUR, GridShape{
+        {LFOUR_}
     }},
     {Z, GridShape{
         {Z_, Z_, __},

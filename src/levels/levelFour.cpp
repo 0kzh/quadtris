@@ -8,6 +8,7 @@ LevelFour::LevelFour() {}
     double val = d * 5; // gives you a number from 0 to 5
 */
 Block LevelFour::makeBlock() {
+  blocksPlaced_++;
   if (random_) {
     int probs[18] = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6};
     int r = rand() % (sizeof(probs) / sizeof(probs[0]));
@@ -18,3 +19,4 @@ Block LevelFour::makeBlock() {
     return b;
   }
 }
+

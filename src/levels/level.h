@@ -18,6 +18,7 @@ public:
 
   void readFile(std::string f);
 
+  int blocksPlaced_;
 protected:
   int cur_;
   bool random_;
