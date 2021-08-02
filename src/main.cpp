@@ -7,6 +7,7 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
   bool textOnly = false;
+  bool guiOnly = false;
   int seed = 0;
   string scriptFile = "sequence.txt";
   int startLevel = 0;
@@ -29,6 +30,9 @@ int main(int argc, char *argv[]) {
       } else if (prev == '-' && cur[j] == 't') {
         textOnly = true;
         break;
+      } else if (prev == '-' && cur[j] == 'g') {
+        guiOnly = true;
+        break;
       }
       prev = cur[j];
       j++;
@@ -36,7 +40,7 @@ int main(int argc, char *argv[]) {
   }
 
   srand(seed);
-  Game game = Game(textOnly, seed, scriptFile);
+  Game game = Game(textOnly, guiOnly, seed, scriptFile);
   Game::curLevelIdx_ = startLevel;
   game.start();
 }

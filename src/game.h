@@ -22,6 +22,7 @@ class Game {
   // BlockType[] blockSequence_;
 
   bool textOnly_;
+  bool guiOnly_;
   string scriptFile_;
 
   vector<shared_ptr<Level>> levelSequence_;
@@ -34,7 +35,7 @@ class Game {
 public:
   static int curLevelIdx_;
 
-  Game(bool textOnly, int seed, string scriptFile);
+  Game(bool textOnly, bool guiOnly, int seed, string scriptFile);
 
   void start();
 
