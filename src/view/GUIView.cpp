@@ -66,9 +66,6 @@ GUIView::GUIView(int width, int height) {
   /* clear the window and bring it on top of the other windows */
   XClearWindow(dis, win);
   XMapRaised(dis, win);
-
-  XFlush(dis);
-  usleep(1000);
 }
 
 void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
@@ -80,7 +77,9 @@ void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
     drawGameScreen(g, level, score, hiScore);
   }
 
-  XFlush(dis);
+  while (XPending(dis)) {
+    XNextEvent(dis, &event);
+  }
 }
 
 void GUIView::drawGameScreen(shared_ptr<Grid> g, int level, int score, int hiScore) {
