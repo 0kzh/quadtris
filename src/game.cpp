@@ -33,7 +33,7 @@ Game::Game(bool textOnly, bool guiOnly, int seed, string scriptFile)
     views_.push_back(make_shared<GUIView>(GUIView(650, 608)));
   } else if (textOnly) {
     views_.push_back(make_shared<TextView>(TextView()));
-  }  else if (guiOnly) {
+  } else if (guiOnly) {
     views_.push_back(make_shared<GUIView>(GUIView(650, 608)));
   }
 
@@ -140,18 +140,11 @@ void Game::gameLoop() {
   score_ += cleared;
   hiScore_ = max(hiScore_, score_);
 
-  if (cleared == 0 && curLevelIdx_ == 4 && (levelSequence_.at(4)->blocksPlaced_ -1) % 5 == 0 && levelSequence_.at(4)->blocksPlaced_ -1 > 0) {
-    std::optional<Block> temp = grid_->fallingBlock();
-    grid_->fallingBlock() = Block{LFOUR, true}; 
-    levelSequence_.at(4)->blocksPlaced_ = 0; 
-    for (int i = 0; i < 5; i++) {
-        grid_->fallingBlock()->move(RIGHT, grid_->grid());
-    }
-    grid_->fallingBlock()->drop(grid_->grid());
-    grid_->fallingBlock() = temp;
-    return;
-//    grid_->fallingBlock() = nullopt; 
+  // if we score, reset the counter
+  if (cleared > 0) {
+    Level::blocksPlaced[Game::curLevelIdx_] = 0;
   }
+
   addBlockIfNone(grid_);
 }
 
@@ -167,12 +160,12 @@ pair<int, Command> Game::readCommand() {
   std::optional<Command> opCmd;
 
   do {
-    if(readFromFile_) {
-      if(fileInp_.is_open() && !(fileInp_ >> input)) {
+    if (readFromFile_) {
+      if (fileInp_.is_open() && !(fileInp_ >> input)) {
         fileInp_.close();
         readFromFile_ = false;
         input = " ";
-      } 
+      }
     } else {
       cin >> input;
     }
@@ -185,7 +178,7 @@ pair<int, Command> Game::readCommand() {
     opCmd = matchCommand(input);
 
   } while (!opCmd || (multiplier > 1 && (*opCmd == CMD_RESTART ||
-                      *opCmd == CMD_RANDOM || *opCmd == CMD_NORANDOM)));
+                                         *opCmd == CMD_RANDOM || *opCmd == CMD_NORANDOM)));
 
   return make_pair(multiplier, *opCmd);
 }

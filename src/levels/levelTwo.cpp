@@ -8,5 +8,5 @@ LevelTwo::LevelTwo() {}
   returns a block with all equal probability.
 */
 Block LevelTwo::makeBlock() {
-  return Block{static_cast<BlockType>(rand() % NUM_BLOCK_TYPES - 1), false};
+  return Block{static_cast<BlockType>(rand() % (NUM_BLOCK_TYPES - 1)), false};
 }

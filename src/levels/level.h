@@ -14,12 +14,18 @@ class Level {
 private:
   std::string filename_;
 public:
+  static std::map<int, int> blocksPlaced;
+
   Level();
+
   virtual Block makeBlock() = 0;
+
   virtual ~Level() = default;
+
   void setRandom(bool r);
+
   void readFile(std::string f);
-  int blocksPlaced_;
+
 protected:
   int cur_;
   bool random_;

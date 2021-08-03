@@ -126,6 +126,19 @@ void Block::copyToGrid(GridShape &g) {
       }
     }
   }
+
+  Level::blocksPlaced[Game::curLevelIdx_]++;
+
+  int blocksPlaced = Level::blocksPlaced[Game::curLevelIdx_];
+  if (Game::curLevelIdx_ == 4 && blocksPlaced % 5 == 0 && blocksPlaced > 0) {
+    // add middle block
+    for (int r = (int) g.size() - 1; r >= 0; r--) {
+      if (!g[r][5].val) {
+        g[r][5] = GridItem{LFOUR};
+        break;
+      }
+    }
+  }
 }
 
 // rotates the block and returns a bool indicating if we should remove the block

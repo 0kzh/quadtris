@@ -1,8 +1,11 @@
 #include "level.h"
 #include <iostream>
 #include <fstream>
+#include <map>
 
-Level::Level() : cur_(0), random_(true), blocksPlaced_(-1) {}
+std::map<int, int> Level::blocksPlaced;
+
+Level::Level() : cur_(0), random_(true) {}
 
 // reads a file containing a sequence of blocks
 void Level::readFile(std::string f) {

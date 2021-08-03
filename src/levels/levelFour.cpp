@@ -11,7 +11,6 @@ LevelFour::LevelFour() {}
   returns a block with skewed probability 2/9 for S,Z, 1/9 for rest or a block from a provided file
 */
 Block LevelFour::makeBlock() {
-  blocksPlaced_++;
   if (random_) {
     int probs[18] = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6};
     int r = rand() % (sizeof(probs) / sizeof(probs[0]));
