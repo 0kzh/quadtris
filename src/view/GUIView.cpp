@@ -5,6 +5,12 @@
 
 using namespace std;
 
+/**
+ * GUIView constructor which initializes the GUI display.
+ * 
+ * @param width the display width in pixels
+ * @param height the display height in pixels
+ */
 GUIView::GUIView(int width, int height) {
   unsigned long black, white;
 
@@ -69,6 +75,14 @@ GUIView::GUIView(int width, int height) {
   XMapRaised(dis, win);
 }
 
+/**
+ * Draws a game grid onto the display
+ * 
+ * @param g the pointer to the grid
+ * @param level the current level
+ * @param score the current score
+ * @param hiScore the current high score
+ */
 void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
   redraw();
 
@@ -83,6 +97,14 @@ void GUIView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
   }
 }
 
+/**
+ * For drawing the game grid when it is not yet game over
+ * 
+ * @param g the pointer to the grid
+ * @param level the current level
+ * @param score the current score
+ * @param hiScore the current high score
+ */
 void GUIView::drawGameScreen(shared_ptr<Grid> g, int level, int score, int hiScore) {
   Color white = {255, 255, 255};
 
@@ -186,6 +208,14 @@ void GUIView::drawGameScreen(shared_ptr<Grid> g, int level, int score, int hiSco
   }
 }
 
+/**
+ * For drawing the game over screen
+ * 
+ * @param g the pointer to the grid
+ * @param level the current level
+ * @param score the current score
+ * @param hiScore the current high score
+ */
 void GUIView::drawGameOverScreen(std::shared_ptr<Grid> g, int level, int score, int highScore) {
   Color white = {255, 255, 255};
   Color gray = {196, 196, 196};
@@ -203,6 +233,11 @@ void GUIView::drawGameOverScreen(std::shared_ptr<Grid> g, int level, int score, 
   drawText(restartText, (width_ - textWidth(restartText)) / 2, 340, gray);
 }
 
+/**
+ * Gets the next GUI event
+ *
+ * @returns the command ENUM specifying the next GUI event
+ */
 Command GUIView::getNextEvent() {
   XNextEvent(dis, &event);
   switch (event.type) {
@@ -231,16 +266,41 @@ Command GUIView::getNextEvent() {
   return CMD_NOOP;
 }
 
+/**
+ * Fills a rectangle shape with colour
+ * 
+ * @param x the x-coordinate of the top-left pixel
+ * @param y the y-coordinate of the top-left pixel
+ * @param width the width of the rectangle in pixels 
+ * @param height the height of the rectangle in pixels
+ * @param color the colour to fill with
+ */
 void GUIView::fillRect(int x, int y, int width, int height, Color color) {
   XSetForeground(dis, gc, RGB(color.r, color.g, color.b));
   XFillRectangle(dis, win, gc, x, y, width, height);
 }
 
+/**
+ * Defines the outline of a rectangle shape
+ * 
+ * @param x the x-coordinate of the top-left pixel
+ * @param y the y-coordinate of the top-left pixel
+ * @param width the width of the rectangle in pixels
+ * @param height the height of the rectangle in pixels
+ * @param color the colour to fill with
+ */
 void GUIView::drawRect(int x, int y, int width, int height, Color color) {
   XSetForeground(dis, gc, RGB(color.r, color.g, color.b));
   XDrawRectangle(dis, win, gc, x, y, width, height);
 }
 
+/**
+ * Draws one cell of a block with foreground, shadow, and highlighting.
+ * 
+ * @param x the x-coordinate of the cell's top-left pixel
+ * @param y the y-coordinate of the cell's top-left pixel
+ * @param block the type of the block
+ */
 void GUIView::drawCell(int x, int y, BlockType block) {
   Color base = blockColors[block].base;
   Color highlight = blockColors[block].highlight;
@@ -252,20 +312,46 @@ void GUIView::drawCell(int x, int y, BlockType block) {
   fillRect(x + edge, y + edge, GRID_SIZE - edge * 2, GRID_SIZE - edge * 2, base);
 }
 
+/**
+ * Calls drawCell() based on the grid dimensions
+ * 
+ * @param x the x position of the cell in the game grid
+ * @param y the y position of the cell in the game grid
+ * @param block the type of the block
+ */
 void GUIView::drawCellInGrid(int row, int col, BlockType block) {
   int x = col * GRID_SIZE;
   int y = row * GRID_SIZE;
   drawCell(x, y, block);
 }
 
+/**
+ * Computes a long to store RGB information about a colour.
+ * 
+ * @param r the R value
+ * @param g the G value
+ * @param b the b Value
+ * @returns the long encoding all three values at once
+ */
 unsigned long GUIView::RGB(int r, int g, int b) {
   return b + (g << 8) + (r << 16);
 }
 
+/**
+ * Clears the display for redrawing
+ */
 void GUIView::redraw() {
   XClearWindow(dis, win);
 }
 
+/**
+ * Draws text on the display
+ * 
+ * @param text the string of text
+ * @param x the x-coordinate of the textbox's top left corner
+ * @param y the y-coordinate of the textbox's top left corner
+ * @param color the colour of the text
+ */
 void GUIView::drawText(std::string text, int x, int y, Color color) {
   XFontStruct *font = XLoadQueryFont(dis, "10x20");
   XTextItem textToDraw = {const_cast<char *>(text.c_str()), static_cast<int>(text.length()), 0, font->fid};

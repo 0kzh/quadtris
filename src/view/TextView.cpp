@@ -7,6 +7,14 @@ using namespace std;
 
 TextView::TextView() {}
 
+/**
+ * Outputs the game grid textually
+ * 
+ * @param g the pointer to the grid
+ * @param level the current level
+ * @param score the current score
+ * @param hiScore the current high score
+ */
 void TextView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
   // deep copy grid
   GridShape gridToPrint = g->grid();
@@ -52,6 +60,7 @@ void TextView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
   cout << levelStr << right << setw(highScoreStr.length() - levelStr.length()) << level << endl;
   cout << scoreStr << right << setw(highScoreStr.length() - scoreStr.length()) << score << endl;
   cout << highScoreStr << endl;
+
   // print everything
   cout << "    -----------" << endl;
   for (int row = 0; row < g->height(); row++) {
@@ -66,6 +75,7 @@ void TextView::draw(shared_ptr<Grid> g, int level, int score, int hiScore) {
   cout << "    -----------" << endl;
   cout << nextStr << endl;
 
+  // display the next block underneath the grid
   const auto &nextBlock = g->nextBlock();
   if (nextBlock) {
     Block nb = *nextBlock;
