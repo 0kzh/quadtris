@@ -4,6 +4,7 @@
 #include <iostream>
 #include <optional>
 #include <map>
+#include <vector>
 
 enum BlockType {
   I, J, L, O, S, Z, T, LFOUR, WALL, HINT
