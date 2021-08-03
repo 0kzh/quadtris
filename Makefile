@@ -5,7 +5,7 @@ HEADERS = $(shell find src/ -name "*.h")
 OBJECTS = $(SRC:%.cpp=%.o)
 
 DEPENDS = ${OBJECTS:.o=.d} # substitute .o with .d for dependency files
-EXEC = prog
+EXEC = quadris
 
 all: ${OBJECTS}
 	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC} -lX11
