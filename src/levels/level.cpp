@@ -12,7 +12,6 @@ void Level::readFile(std::string f) {
   if (blklist.is_open()) {
     while (!blklist.eof()) {
       blklist >> blk;
-      std::cout << blk;
       blocks_.push_back(charToBlockType[blk]);
     }
   }
