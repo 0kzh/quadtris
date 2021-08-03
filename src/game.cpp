@@ -144,11 +144,10 @@ pair<int, Command> Game::readCommand() {
       } else {
         fileInp_.close();
         readFromFile_ = false;
-        getline(cin, input);
+        cin >> input;
       }
     } else {
-  //  cin >> input;
-      getline(cin, input);
+      cin >> input;
     }
     if (input.empty()) {
       exit(1); // EOF ends the game
@@ -158,8 +157,8 @@ pair<int, Command> Game::readCommand() {
     input = multipliedInput.second;
     opCmd = matchCommand(input);
 
-  } while (!opCmd || ((multiplier > 1 && *opCmd == CMD_RESTART) ||
-                      *opCmd == CMD_RANDOM || *opCmd == CMD_NORANDOM));
+  } while (!opCmd || (multiplier > 1 && (*opCmd == CMD_RESTART ||
+                      *opCmd == CMD_RANDOM || *opCmd == CMD_NORANDOM)));
 
   //Command cmd = *opCmd;
   return make_pair(multiplier, *opCmd);
