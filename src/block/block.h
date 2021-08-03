@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 
+// inline grid items to easily map a block type to its corresponding shape
 inline GridItem __ = GridItem{std::nullopt};
 inline GridItem I_ = GridItem{I};
 inline GridItem J_ = GridItem{J};
@@ -48,7 +49,7 @@ inline std::map<BlockType, GridShape> blockTypeToData = {
     }}
 };
 
-
+// Block class
 class Block {
   bool isHeavy_;
   GridShape shape_;
@@ -62,9 +63,10 @@ class Block {
 public:
   Block(BlockType type, bool isHeavy);
 
-  // moves the block and returns a bool indicating if we should remove the block;
+  // moves the block and returns a bool indicating if we should remove the block
   bool move(Direction d, GridShape &g);
 
+  // drops the block until we've reached the bottom of a grid or intersect another block
   void drop(GridShape &g);
 
   // checks if the block intersects with any of the grid blocks or the edges
@@ -72,10 +74,13 @@ public:
 
   bool intersects(const Point &p, const GridShape &g, const GridShape &blockShape);
 
+  // puts the given GridShape onto the grid
   void copyToGrid(GridShape &g);
 
+  // rotates the block and returns a bool indicating if we should remove the block 
   bool rotate(RotationDirection d, const GridShape &g);
 
+  // accessor functions
   int height() const;
 
   int width() const;
@@ -84,11 +89,12 @@ public:
 
   BlockType type() const;
 
-  void setType(BlockType);
-
   std::vector<std::vector<GridItem>> shape() const;
 
   bool heavy() const;
+
+  // setter function
+  void setType(BlockType);
 };
 
 #endif

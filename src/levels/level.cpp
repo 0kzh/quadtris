@@ -4,6 +4,7 @@
 
 Level::Level() : cur_(0), random_(true), blocksPlaced_(-1) {}
 
+// reads a file containing a sequence of blocks
 void Level::readFile(std::string f) {
   filename_ = f;
   char blk;
@@ -17,6 +18,7 @@ void Level::readFile(std::string f) {
   blklist.close();
 }
 
+// setter function
 void Level::setRandom(bool r) {
   random_ = r;
 }

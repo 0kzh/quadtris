@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// Block constructor
 Block::Block(BlockType type, bool isHeavy) : isHeavy_(isHeavy), type_(type) {
   shape_ = blockTypeToData[type];
 
@@ -30,6 +31,7 @@ Block::Block(BlockType type, bool isHeavy) : isHeavy_(isHeavy), type_(type) {
   bottomLeft_ = Point{.x = 0, .y = 2 + height_};
 }
 
+// moves the block and returns a bool indicating if we should remove the block
 bool Block::move(Direction d, GridShape &g) {
   switch (d) {
     case LEFT:
@@ -55,6 +57,7 @@ bool Block::move(Direction d, GridShape &g) {
   return false;
 }
 
+// drops the block until we've reached the bottom of a grid or intersect another block
 void Block::drop(GridShape &g) {
   Point newBottomLeft = bottomLeft_;
 
@@ -71,10 +74,12 @@ void Block::drop(GridShape &g) {
   copyToGrid(g);
 }
 
+// checks if the block intersects with any of the grid blocks
 bool Block::intersects(const Point &p, const GridShape &g) {
   return intersects(p, g, shape_);
 }
 
+// checks if the block intersects with any of the grid edges
 bool Block::intersects(const Point &p, const GridShape &g, const GridShape &blockShape) {
   int x = p.x;
   int y = p.y;
@@ -106,6 +111,7 @@ bool Block::intersects(const Point &p, const GridShape &g, const GridShape &bloc
   return false;
 }
 
+// puts the given GridShape onto the grid
 void Block::copyToGrid(GridShape &g) {
   int y = bottomLeft_.y;
   int x = bottomLeft_.x;
@@ -122,6 +128,7 @@ void Block::copyToGrid(GridShape &g) {
   }
 }
 
+// rotates the block and returns a bool indicating if we should remove the block
 bool Block::rotate(RotationDirection d, const GridShape &g) {
   int gridHeight = g.size();
   int gridWidth = g[0].size();
@@ -170,22 +177,27 @@ bool Block::rotate(RotationDirection d, const GridShape &g) {
   return false;
 }
 
+// height accessor returns an int representing height
 int Block::height() const {
   return height_;
 }
 
+// width accessor returns an int representing width
 int Block::width() const {
   return width_;
 }
 
+// bottomLeft location accessor returns a Point representing the bottom left
 Point Block::bottomLeft() const {
   return bottomLeft_;
 }
 
+// type accessor returns a BlockType representing type of block
 BlockType Block::type() const {
   return type_;
 }
 
+// setter function that sets the block's type
 void Block::setType(BlockType type) {
   shape_ = blockTypeToData[type];
   type_ = type;
@@ -204,10 +216,12 @@ void Block::setType(BlockType type) {
   width_ = shape_[0].size();
 }
 
+// accessor that returns a GridShape representing the block's shape
 GridShape Block::shape() const {
   return shape_;
 }
 
+// accessor that returns a boolean representing whether the block is heavy or not
 bool Block::heavy() const {
   return isHeavy_;
 }

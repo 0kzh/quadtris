@@ -3,9 +3,10 @@
 LevelOne::LevelOne() {}
 
 /**
-    int r = rand();  // gives you a number from 0 to RAND_MAX
-    double d = r / RAND_MAX;  // gives you a number from 0 to 1
-    double val = d * 5; // gives you a number from 0 to 5
+  choose a random index number from an array holding numbers corresponding to
+  block types, chosen with equal probability. There are 1/12 S and Z blocks,
+  2/12 of all the other blocks.
+  returns a block with skewed probability 1/12 for S,Z, 1/6 for rest 
 */
 Block LevelOne::makeBlock() {
   int probs[12] = {0, 0, 1, 1, 2, 2, 3, 3, 4, 5, 6, 6};

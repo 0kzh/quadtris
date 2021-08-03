@@ -3,9 +3,12 @@
 LevelFour::LevelFour() {}
 
 /**
-    int r = rand();  // gives you a number from 0 to RAND_MAX
-    double d = r / RAND_MAX;  // gives you a number from 0 to 1
-    double val = d * 5; // gives you a number from 0 to 5
+  if we want random block generation,
+  choose a random index number from an array holding numbers corresponding to
+  block types, chosen with equal probability. There are 1/12 S and Z blocks,
+  2/12 of all the other blocks.                                    
+  Otherwise, return the currect block in the sequence file.
+  returns a block with skewed probability 2/9 for S,Z, 1/9 for rest or a block from a provided file
 */
 Block LevelFour::makeBlock() {
   blocksPlaced_++;
