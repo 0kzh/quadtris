@@ -1,6 +1,7 @@
 #include "GUIView.h"
 #include "../util/helper.h"
 #include <memory>
+#include <cassert>
 
 using namespace std;
 
