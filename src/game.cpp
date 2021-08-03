@@ -66,6 +66,7 @@ void Game::gameLoop() {
 
   for (auto &v : views_) {
     v->draw(grid_, curLevelIdx_, score_, hiScore_);
+    v->draw(grid_, curLevelIdx_, score_, hiScore_);
     if (dynamic_pointer_cast<GUIView>(v) != nullptr) {
       guiView = dynamic_pointer_cast<GUIView>(v);
     }
@@ -81,9 +82,10 @@ void Game::gameLoop() {
     if (hasTextView) {
       cout << "Game Over! Enter any key to restart or 'q' to quit." << endl;
       string input;
-      getline(cin, input);
+      //getline(cin, input);
+      cin >> input;
 
-      cout << input;
+      //cout << input;
 
       if (input == "q") {
         c = CMD_QUIT;
