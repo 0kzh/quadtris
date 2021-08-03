@@ -315,8 +315,8 @@ void GUIView::drawCell(int x, int y, BlockType block) {
 /**
  * Calls drawCell() based on the grid dimensions
  * 
- * @param x the x position of the cell in the game grid
- * @param y the y position of the cell in the game grid
+ * @param x the column of the cell in the game grid
+ * @param y the row of the cell in the game grid
  * @param block the type of the block
  */
 void GUIView::drawCellInGrid(int row, int col, BlockType block) {
