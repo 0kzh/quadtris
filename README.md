@@ -1,5 +1,10 @@
 ## Quadris
 
+Bonus Features:
+  - Smart pointers
+  - Extra CLI command: -gui that allows for a GUI only mode
+  - Extra GUI features such as arrows and keys that allow for full functionality on its own
+
 - [x] project skeleton
 - [x] command interpreter
     - [x] command line flags
