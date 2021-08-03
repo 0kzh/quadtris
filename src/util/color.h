@@ -4,18 +4,21 @@
 #include "types.h"
 #include <map>
 
+//Specifies RGB values for desired colours
 struct Color {
   int r;
   int g;
   int b;
 };
 
+//Specifies colour sets for thematic use
 struct ColorSet {
   Color base;
   Color highlight;
   Color shadow;
 };
 
+//Maps types of blocks to their respective colours
 inline std::map<BlockType, ColorSet> blockColors{
     {I,    {Color{0, 240, 238}, Color{178, 251, 250}, Color{0, 216, 214}}},
     {J,    {Color{0, 0, 239},   Color{180, 178, 251}, Color{0, 0, 120},}},

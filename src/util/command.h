@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 
+//Enums for all valid commands
 enum Command {
   CMD_LEFT,
   CMD_RIGHT,
@@ -32,6 +33,7 @@ enum Command {
   CMD_QUIT
 };
 
+//Matches input strings to their command types
 inline std::map<std::string, Command> inputToCommand = {
     {"left",             CMD_LEFT},
     {"right",            CMD_RIGHT},
@@ -65,8 +67,12 @@ inline std::map<Command, BlockType> cmdToBlockType = {
     {CMD_T, T},
 };
 
-// does fuzzy matching on string input.
-// returns `Command` if found, `nullopt` otherwise
+/**
+ * Fuzzy matches on the string input based on prefix indexing.
+ *
+ * @param input the input string
+ * @returns `Command` if found, `nullopt` otherwise
+ */
 inline std::optional<Command> matchCommand(const std::string &input) {
   std::vector<std::string> keys;
   keys.reserve(inputToCommand.size());
