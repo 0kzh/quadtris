@@ -10,13 +10,11 @@ void Level::readFile(std::string f) {
 
   std::ifstream blklist(filename_);
   if (blklist.is_open()) {
-    while (!blklist.eof()) {
-      blklist >> blk;
+    while (blklist >> blk) {
       blocks_.push_back(charToBlockType[blk]);
     }
   }
   blklist.close();
-  blocks_.pop_back();
 }
 
 void Level::setRandom(bool r) {

@@ -139,13 +139,11 @@ pair<int, Command> Game::readCommand() {
 
   do {
     if(readFromFile_) {
-      if(fileInp_.is_open() && !fileInp_.eof()) {
-        fileInp_ >> input;
-      } else {
+      if(fileInp_.is_open() && !(fileInp_ >> input)) {
         fileInp_.close();
         readFromFile_ = false;
-        cin >> input;
-      }
+        input = " ";
+      } 
     } else {
       cin >> input;
     }
@@ -160,7 +158,6 @@ pair<int, Command> Game::readCommand() {
   } while (!opCmd || (multiplier > 1 && (*opCmd == CMD_RESTART ||
                       *opCmd == CMD_RANDOM || *opCmd == CMD_NORANDOM)));
 
-  //Command cmd = *opCmd;
   return make_pair(multiplier, *opCmd);
 }
 
