@@ -1,6 +1,6 @@
 #include "helper.h"
 #include <cassert>
-#inlcude <atomic>
+#include <atomic>
 
 using namespace std;
 
