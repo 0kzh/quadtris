@@ -15,6 +15,14 @@ using namespace std;
 bool Game::readFromFile_ = false;
 ifstream Game::fileInp_;
 
+/**
+ * Initializes a new Game.
+ *
+ * @param textOnly whether the game is text only
+ * @param guiOnly whether the game is GUI only
+ * @param the seed for random number generation
+ * @param scriptFile the file for loading locks in level 0
+ */
 Game::Game(bool textOnly, bool guiOnly, int seed, string scriptFile)
     : textOnly_(textOnly), guiOnly_(guiOnly), scriptFile_(scriptFile),
       score_(0), hiScore_(0) {
@@ -33,6 +41,9 @@ Game::Game(bool textOnly, bool guiOnly, int seed, string scriptFile)
   initializeLevels();
 }
 
+/**
+ * Further initializes the game by creating the Level objects
+ */
 void Game::initializeLevels() {
   levelSequence_ = {make_shared<LevelZero>(LevelZero(scriptFile_)),
                     make_shared<LevelOne>(LevelOne()),
@@ -43,12 +54,20 @@ void Game::initializeLevels() {
 
 int Game::curLevelIdx_ = 0;
 
+/**
+ * Runs the game loop
+ */
 void Game::start() {
   while (true) {
     gameLoop();
   }
 }
 
+/**
+ * Generates new blocks in the game grid and checks whether the game is over
+ *
+ * @return whether the game is over
+ */
 bool Game::addBlockIfNone(const shared_ptr<Grid> &g) {
   shared_ptr<Level> curLevel = levelSequence_.at(curLevelIdx_);
   while (!g->fallingBlock()) {
@@ -58,6 +77,9 @@ bool Game::addBlockIfNone(const shared_ptr<Grid> &g) {
   return g->isGameOver();
 }
 
+/**
+ * Continuously takes commands and updates the game grid
+ */
 void Game::gameLoop() {
   bool gameOver = addBlockIfNone(grid_);
 
@@ -81,10 +103,7 @@ void Game::gameLoop() {
     if (hasTextView) {
       cout << "Game Over! Enter any key to restart or 'q' to quit." << endl;
       string input;
-      //getline(cin, input);
       cin >> input;
-
-      //cout << input;
 
       if (input == "q") {
         c = CMD_QUIT;
@@ -136,6 +155,12 @@ void Game::gameLoop() {
   addBlockIfNone(grid_);
 }
 
+/**
+ * Reads command input
+ * 
+ * @returns a pair of the command multiplier as an int
+ * and the Command type itself
+ */
 pair<int, Command> Game::readCommand() {
   int multiplier;
   string input;
@@ -165,6 +190,9 @@ pair<int, Command> Game::readCommand() {
   return make_pair(multiplier, *opCmd);
 }
 
+/**
+ * Moves the current block down
+ */
 void Game::moveDown() {
   bool shouldRemove = grid_->fallingBlock()->move(DOWN, grid_->grid());
   if (shouldRemove) {
@@ -172,6 +200,9 @@ void Game::moveDown() {
   }
 }
 
+/**
+ * Resets the game
+ */
 void Game::reset() {
   curLevelIdx_ = 0;
   score_ = 0;
@@ -179,6 +210,12 @@ void Game::reset() {
   initializeLevels();
 }
 
+/**
+ * Processes a command, repeating it according to the multiplier.
+ * 
+ * @param multiplier the number of times to run the command
+ * @param the command type enum
+ */
 void Game::processCommand(int multiplier, Command cmd) {
   for (int i = 0; i < multiplier; i++) {
     switch (cmd) {
